@@ -1,0 +1,13 @@
+<?php
+
+
+  /* @var $this Test_Unit_Runner */
+  $this->setComponentsRootPath(__DIR__.'/../');
+  $this->setBuildPath($this->getComponentsRootPath().'/build');
+
+  $this->excludePattern='/build/';
+  $this->includePathSchema='test/unit';
+
+  $this->addResultHandler(new Test_Unit_Result_Handler($this->getBuildPath().'/test/unit'));
+  //----------------------------------------------------------------------------
+?>
