@@ -14,7 +14,7 @@
    * @copyright Copyright (C) 2012 evalcode.net
    * @license GNU General Public License 3
    */
-  abstract class Test_Runner
+  abstract class Test_Runner implements Runtime_Exception_Handler
   {
     // PROPERTIES
     /**
@@ -40,6 +40,11 @@
      */
     public $typeTestSuite;
 
+    /**
+     * @var Test_Output
+     */
+    public $output;
+
     public static $fileExtensionsPhp=array('php', 'phps');
     //--------------------------------------------------------------------------
 
@@ -64,7 +69,13 @@
         ));
       }
 
-      return self::$m_instance=new $type_();
+      static::registerAnnotations();
+      self::$m_instance=new $type_();
+
+      Runtime::addRuntimeExceptionHandler('Exception', self::$m_instance);
+      Runtime::addRuntimeExceptionHandler('ErrorException', self::$m_instance);
+
+      return self::$m_instance;
     }
 
     /**
@@ -80,46 +91,29 @@
     // ACCESSORS
     public function run()
     {
-      $this->configure();
+      if(null===$this->m_buildPath)
+        throw new Exception_IllegalState('test/runner', 'Build path must be specified.');
+      if(null===$this->m_testRootPath)
+        throw new Exception_IllegalState('test/runner', 'Test root path must be specified.');
+
+      if(null===$this->output)
+        $this->output=new Test_Output_Null();
+
+      if(null===$this->m_result)
+        $this->m_result=new Test_Result();
+
+      $this->invokeLifecycleListeners(Test_LifecycleListener::INITIALIZATION);
       $this->initialize();
+      $this->discoverTests();
+      $this->getTempPath()->create();
 
-      $this->runImpl();
+      $this->invokeLifecycleListeners(Test_LifecycleListener::EXECUTION);
+      $this->execute();
+
       $this->invokeResultHandler($this->m_result);
-    }
 
-    public function configure()
-    {
-      if($this->m_configured)
-        return;
-
-      $this->setResult(new Test_Result());
-
-      if(null!==$this->m_configuration)
-        include $this->m_configuration;
-
-      // search tests in project root path if test root path is not set
-      if(null===$this->m_testRootPath && null!==$this->m_componentsRootPath)
-        $this->setTestRootPath($this->m_componentsRootPath);
-
-      $this->m_configured=true;
-    }
-
-    public function initialize()
-    {
-      if($this->m_initialized)
-        return;
-
-      static::registerAnnotations();
-
-      $this->createBuildPath();
-      $this->initializeImpl();
-
-      $this->m_initialized=true;
-    }
-
-    public function setConfiguration($path_)
-    {
-      $this->m_configuration=$path_;
+      $this->invokeLifecycleListeners(Test_LifecycleListener::TERMINATION);
+      $this->getTempPath()->delete(true);
     }
 
     public function addClass($path_)
@@ -128,6 +122,22 @@
         throw new Exception_IllegalArgument('test/runner', 'Passed path does not point to a valid source file.');
 
       require_once $path_;
+    }
+
+    public function addPathToClassPath($path_)
+    {
+      $iterator=new RecursiveIteratorIterator(
+        new RecursiveDirectoryIterator($path_),
+        RecursiveIteratorIterator::SELF_FIRST
+      );
+
+      foreach($iterator as $entry)
+      {
+        if(false===$this->validSourceFile($entry->getPathname()))
+          continue;
+
+        require_once $entry->getPathname();
+      }
     }
 
     public function addTestSuite($class_)
@@ -168,33 +178,20 @@
       }
     }
 
-    public function addPathToClassPath($path_)
+    /**
+     * @return Io_Path
+     */
+    public function getTempPath()
     {
-      $iterator=new RecursiveIteratorIterator(
-        new RecursiveDirectoryIterator($path_),
-          RecursiveIteratorIterator::SELF_FIRST
-      );
-
-      foreach($iterator as $entry)
-      {
-        if(false===$this->validSourceFile($entry->getPathname()))
-          continue;
-
-        require_once $entry->getPathname();
-      }
+      return Io::path($this->m_buildPath)->tmp;
     }
 
-    public function setComponentsRootPath($path_)
+    /**
+     * @return Io_Path
+     */
+    public function getBuildPath()
     {
-      if(false===$this->validPath($path_))
-        throw new Exception_IllegalArgument('test/runner', 'Invalid project root path.');
-
-      $this->m_componentsRootPath=$path_;
-    }
-
-    public function getComponentsRootPath()
-    {
-      return $this->m_componentsRootPath;
+      return Io::path($this->m_buildPath);
     }
 
     public function setBuildPath($path_)
@@ -202,9 +199,12 @@
       $this->m_buildPath=$path_;
     }
 
-    public function getBuildPath()
+    /**
+     * @return Io_Path
+     */
+    public function getTestRootPath()
     {
-      return $this->m_buildPath;
+      return Io::path($this->m_testRootPath);
     }
 
     public function setTestRootPath($path_)
@@ -215,9 +215,9 @@
       $this->m_testRootPath=$path_;
     }
 
-    public function getTestRootPath()
+    public function getTestSuite()
     {
-      return $this->m_testRootPath;
+      return $this->m_testSuite;
     }
 
     public function setTestSuite($class_)
@@ -225,30 +225,9 @@
       $this->m_testSuite=$class_;
     }
 
-    public function getTestSuite()
+    public function getTestPaths()
     {
-      return $this->m_testSuite;
-    }
-
-    public function setRootPath($path_)
-    {
-      if(false===$this->validPath($path_))
-        throw new Exception_IllegalArgument('test/runner', 'Invalid root path.');
-
-      $this->m_rootPath=$path_;
-    }
-
-    public function getRootPath()
-    {
-      return $this->m_rootPath;
-    }
-
-    /**
-     * @param Test_Result $result_
-     */
-    public function setResult(Test_Result $result_)
-    {
-      $this->m_result=$result_;
+      return $this->m_testPaths;
     }
 
     /**
@@ -259,14 +238,22 @@
       return $this->m_result;
     }
 
-    public function addResultHandler(Test_Result_Handler $resultHandler_)
+    /**
+     * @param Test_Result $result_
+     */
+    public function setResult(Test_Result $result_)
     {
-      array_push($this->m_resultHandler, $resultHandler_);
+      $this->m_result=$result_;
     }
 
     public function getResultHandler()
     {
       return $this->m_resultHandler;
+    }
+
+    public function addResultHandler(Test_Result_Handler $resultHandler_)
+    {
+      array_push($this->m_resultHandler, $resultHandler_);
     }
 
     public function invokeResultHandler(Test_Result $result_)
@@ -291,11 +278,6 @@
       return $this->m_injector;
     }
 
-    public function setBindingModule(Binding_Module $bindingModule_)
-    {
-      $this->m_bindingModule=$bindingModule_;
-    }
-
     /**
      * @return Binding_Module
      */
@@ -305,6 +287,11 @@
         $this->m_bindingModule=new Test_Binding_Module();
 
       return $this->m_bindingModule;
+    }
+
+    public function setBindingModule(Binding_Module $bindingModule_)
+    {
+      $this->m_bindingModule=$bindingModule_;
     }
 
     public function addLifecycleListener(Test_LifecycleListener $lifecycleListener_)
@@ -322,10 +309,13 @@
           unset($this->m_lifecycleListeners[$key]);
       }
     }
+    //--------------------------------------------------------------------------
 
-    public function getTestPaths()
+
+    // OVERRIDES/IMPLEMENTS
+    public function onException(Exception $e_)
     {
-      return $this->m_testPaths;
+      die("Tests Failed: ".$e_->getMessage());
     }
     //--------------------------------------------------------------------------
 
@@ -353,21 +343,9 @@
      */
     protected $m_suitesAdded=array();
     /**
-     * @var boolean
-     */
-    protected $m_configured=false;
-    /**
-     * @var boolean
-     */
-    protected $m_initialized=false;
-    /**
      * @var Binding_Module
      */
     protected $m_bindingModule;
-    /**
-     * @var string
-     */
-    protected $m_configuration;
     /**
      * @var Injector
      */
@@ -377,17 +355,9 @@
      */
     protected $m_buildPath;
     /**
-     * @var string
-     */
-    protected $m_componentsRootPath;
-    /**
      * @var Test_Result
      */
     protected $m_result;
-    /**
-     * @var string
-     */
-    protected $m_rootPath;
     /**
      * @var string
      */
@@ -407,18 +377,13 @@
 
     protected abstract function getTitle();
 
-    protected abstract function runImpl();
-    protected abstract function initializeImpl();
+    protected abstract function initialize();
+    protected abstract function execute();
 
     protected function invokeLifecycleListeners($method_)
     {
       foreach($this->m_lifecycleListeners as $listener)
         $listener->{$method_}($this);
-    }
-
-    protected function createBuildPath()
-    {
-      return Io::createDirectory($this->m_buildPath);
     }
 
     protected function discoverTests()

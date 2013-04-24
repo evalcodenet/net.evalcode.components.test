@@ -2,10 +2,10 @@
 
 
   /**
-   * Unit_Case_Mock_Factory
+   * Test_Unit_Case_Mock
    *
    * @package net.evalcode.components
-   * @subpackage test.unit.case.mock
+   * @subpackage test.unit.case
    *
    * @since 1.0
    * @access public
@@ -14,17 +14,17 @@
    * @copyright Copyright (C) 2012 evalcode.net
    * @license GNU General Public License 3
    */
-  class Unit_Case_Mock_Factory implements Test_Unit_Case
+  class Test_Unit_Case_Mock implements Test_Unit_Case
   {
     // TESTS
     /**
      * @Test
      * @Profile(fork)
      */
-    public function testMockOne()
+    public function mockFactory()
     {
       $mockException=Mock_Factory::mock('Test_Exception',
-        array('test/unit/case/mock/factory', 'Mocked Exception.')
+        array('test/unit/case/mock', 'Mocked Exception.')
       );
 
       $mockExceptionDefault=Mock_Factory::mock('Test_Exception');
@@ -41,7 +41,7 @@
 
       $mockLL->termination($mockRunner);
 
-      assertEquals('test/unit/case/mock/factory', $mockException->getNamespace());
+      assertEquals('test/unit/case/mock', $mockException->getNamespace());
       assertEquals('Mocked Exception.', $mockException->getMessage());
 
       assertEquals('test/exception', $mockExceptionDefault->getNamespace());
@@ -79,14 +79,15 @@
      * @Test
      * @Profile(fork)
      */
-    public function testMockTwo()
+    public function mockMethods()
     {
-      $queue=Mock_Factory::mock('Unit_Case_Mock_Queue', array(100));
+      // FIXME Mock inherited methods of parent class(es).
+      $queue=Mock_Factory::mock('Test_Unit_Case_Mock_Queue', array(100));
       $queue->when('increaseCapacity')->doNothing();
       $queue->increaseCapacity(1);
       assertEquals(100, $queue->getCapacity());
 
-      $stack=Mock_Factory::mock('Unit_Case_Mock_Stack', array(100));
+      $stack=Mock_Factory::mock('Test_Unit_Case_Mock_Stack', array(100));
       $stack->when('increaseCapacity')->doNothing();
       $stack->increaseCapacity(1);
       assertEquals(100, $stack->getCapacity());

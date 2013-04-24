@@ -36,7 +36,7 @@
       foreach($args_ as $arg)
         $args[]=self::mixedToString($arg);
 
-      return sprintf('%1$s:%2$d %3$s(%4$s).', $file, $line, $method_, implode(', ', $args));
+      return sprintf('%1$d %2$s(%3$s).', $line, $method_, implode(', ', $args));
     }
 
     public static function mixedToString($mixed_)

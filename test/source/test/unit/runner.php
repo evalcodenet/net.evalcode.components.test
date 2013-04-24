@@ -49,11 +49,13 @@
     /**
      * Initializes / prepares unit test execution.
      */
-    protected function initializeImpl()
+    protected function initialize()
     {
       $this->addClass(__DIR__.'/../../assertion.php');
 
-      $this->discoverTests();
+      $this->addResultHandler(
+        new Test_Unit_Result_Handler($this->getBuildPath().'/test/unit')
+      );
     }
 
     /**
@@ -61,8 +63,10 @@
      *
      * Results are written to given instance of Test_Result.
      */
-    protected function runImpl()
+    protected function execute()
     {
+      $this->output->appendBanner();
+
       foreach($this->m_suites as $suite)
       {
         $executor=new Test_Unit_Executor($this);
@@ -70,6 +74,8 @@
         $executor->setSuite($suite);
         $executor->execute($this->m_result->create(Test_Result::TYPE_SUITE));
       }
+
+      $this->output->appendSummary($this->m_result);
     }
     //--------------------------------------------------------------------------
   }

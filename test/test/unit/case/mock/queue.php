@@ -2,7 +2,7 @@
 
 
   /**
-   * Unit_Case_Mock_Queue
+   * Test_Unit_Case_Mock_Queue
    *
    * @package net.evalcode.components
    * @subpackage test.unit.case.mock
@@ -14,7 +14,7 @@
    * @copyright Copyright (C) 2012 evalcode.net
    * @license GNU General Public License 3
    */
-  class Unit_Case_Mock_Queue extends Unit_Case_Mock_Stack
+  class Test_Unit_Case_Mock_Queue extends Test_Unit_Case_Mock_Stack
   {
 
   }

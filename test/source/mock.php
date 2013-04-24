@@ -32,7 +32,7 @@
     {
       if(false===$this->mockType->hasMethod($name_))
       {
-        throw new Exception_IllegalArgument('test/mock',
+        throw new Exception_IllegalArgument('mock',
           'Unable to mock non-existing method "'.$name_.'".'
         );
       }
@@ -49,7 +49,7 @@
     {
       if(false===$this->mockType->hasMethod($name_))
       {
-        throw new Exception_IllegalArgument('test/mock',
+        throw new Exception_IllegalArgument('mock',
           'Called non-existing method "'.$name_.'".'
         );
       }

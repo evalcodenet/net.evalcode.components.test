@@ -24,7 +24,7 @@
     {
       if(false===@class_exists($type_) && false===@interface_exists($type_))
       {
-        throw new Exception_IllegalArgument('test/mock/factory',
+        throw new Exception_IllegalArgument('mock/factory',
           sprintf('Unable to mock undeclared type %1$s.', $type_)
         );
       }
@@ -35,7 +35,7 @@
 
 
     // IMPLEMENTATION
-    protected static $m_tokensMethodSignature=array(
+    private static $m_tokensMethodSignature=array(
       T_ARRAY,
       T_CONSTANT_ENCAPSED_STRING,
       T_DOUBLE_ARROW,
@@ -45,6 +45,8 @@
       T_STRING,
       T_VARIABLE
     );
+
+    private static $m_tmpPath;
     //-----
 
 
@@ -56,15 +58,17 @@
       $type=new ReflectionClass($type_);
 
       if($type->isFinal())
-        throw new Exception_IllegalArgument('test/mock/factory', 'Can not mock final class.');
+        throw new Exception_IllegalArgument('mock/factory', 'Can not mock final class.');
 
       $mtime=@filemtime($type->getFileName());
 
       $classMock='Mock_'.$type_.'_'.$mtime;
       if(false===@class_exists($classMock))
       {
-        $filePath=Io::tmpPathname();
-        $fileName="$filePath/$classMock.php";
+        if(null===self::$m_tmpPath)
+          self::$m_tmpPath=(string)Test_Runner::get()->getTempPath();
+
+        $fileName=self::$m_tmpPath."/$classMock.php";
 
         if(false===@file_exists($fileName))
         {
@@ -72,7 +76,7 @@
 
           if(false===@file_put_contents($fileName, $source, 0644))
           {
-            throw new Exception_IllegalState('test/mock/factory',
+            throw new Exception_IllegalState('mock/factory',
               sprintf('Unable to create mock [type: %1$s, path: %2$s].', $type_, $fileName)
             );
           }

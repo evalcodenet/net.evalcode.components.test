@@ -2,7 +2,7 @@
 
 
   /**
-   * Unit_Case_Common
+   * Test_Unit_Case_Common
    *
    * @package net.evalcode.components
    * @subpackage test.unit.case
@@ -14,7 +14,7 @@
    * @copyright Copyright (C) 2012 evalcode.net
    * @license GNU General Public License 3
    */
-  class Unit_Case_Common implements Test_Unit_Case
+  class Test_Unit_Case_Common implements Test_Unit_Case
   {
     // TESTS
     /**
@@ -499,6 +499,7 @@
     {
       assertFalse(true);
     }
+    //--------------------------------------------------------------------------
 
 
     // HELPERS

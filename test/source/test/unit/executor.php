@@ -61,12 +61,16 @@
       $result_->path=$this->m_suite->getPath();
       $result_->name=$this->m_suite->getClass()->name;
 
+      $this->m_runner->output->enterSuite($result_);
+
       $this->invokeMethod($result_, $this->m_suite, Annotation_BeforeSuite::NAME);
 
       foreach($this->m_cases as $case)
         $this->executeCase($case, $result_->create(Test_Result::TYPE_CASE));
 
       $this->invokeMethod($result_, $this->m_suite, Annotation_AfterSuite::NAME);
+
+      $this->m_runner->output->leaveSuite($result_);
     }
     //--------------------------------------------------------------------------
 
@@ -92,6 +96,8 @@
       $result_->path=$case_->getPath();
       $result_->name=$case_->getClass()->name;
 
+      $this->m_runner->output->enterCase($result_);
+
       $this->invokeMethod($result_, $case_, Annotation_BeforeClass::NAME);
 
       $case_->createInstance();
@@ -100,26 +106,30 @@
 
       foreach($tests as $test)
       {
-        $this->invokeMethod($result_, $case_, Annotation_BeforeMethod::NAME);
-
         $resultTest=$result_->create(Test_Result::TYPE_TEST);
         $resultTest->name=$test->name;
+
+        $this->m_runner->output->enterTest($resultTest);
 
         if($case_->skipTest($test))
         {
           $resultTest->addState(Test_RESULT::STATE_SKIPPED);
-
-          continue;
+        }
+        else
+        {
+          $this->invokeMethod($result_, $case_, Annotation_BeforeMethod::NAME);
+          $this->invokeTest($case_, $test, $resultTest);
+          $this->invokeMethod($result_, $case_, Annotation_AfterMethod::NAME);
         }
 
-        $this->invokeTest($case_, $test, $resultTest);
-
-        $this->invokeMethod($result_, $case_, Annotation_AfterMethod::NAME);
+        $this->m_runner->output->leaveTest($resultTest);
       }
 
       $case_->destroyInstance();
 
       $this->invokeMethod($result_, $case_, Annotation_AfterClass::NAME);
+
+      $this->m_runner->output->leaveCase($result_);
     }
 
     protected function invokeTest(Test_Unit_Internal_DynamicProxy $case_, ReflectionMethod $test_, Test_Result $result_)

@@ -2,7 +2,7 @@
 
 
   /**
-   * Unit_Case_Mock_Stack
+   * Test_Unit_Case_Mock_Stack
    *
    * @package net.evalcode.components
    * @subpackage test.unit.case.mock
@@ -14,7 +14,7 @@
    * @copyright Copyright (C) 2012 evalcode.net
    * @license GNU General Public License 3
    */
-  class Unit_Case_Mock_Stack
+  class Test_Unit_Case_Mock_Stack
   {
     // CONSTRUCTION
     public function __construct($capacity_=10)
@@ -28,7 +28,7 @@
     /**
      * @param mixed $value_
      *
-     * @return Unit_Case_Mock_Queue
+     * @return Test_Unit_Case_Mock_Stack
      */
     public function offer($value_=null)
     {
@@ -40,7 +40,7 @@
     /**
      * @param string $value_
      *
-     * @return Unit_Case_Mock_Queue
+     * @return Test_Unit_Case_Mock_Stack
      */
     public function offerString($value_='')
     {
@@ -50,7 +50,7 @@
     }
 
     /**
-     * @return Unit_Case_Mock_Queue
+     * @return Test_Unit_Case_Mock_Stack
      */
     public function take()
     {
@@ -58,7 +58,7 @@
     }
 
     /**
-     * @return Unit_Case_Mock_Queue
+     * @return Test_Unit_Case_Mock_Stack
      */
     public function toArray()
     {
@@ -66,20 +66,20 @@
     }
 
     /**
-     * @param Unit_Case_Mock_Queue $queue_
+     * @param Test_Unit_Case_Mock_Stack $stack_
      *
-     * @return Unit_Case_Mock_Queue
+     * @return Test_Unit_Case_Mock_Stack
      */
-    public function append(Unit_Case_Mock_Queue &$queue_)
+    public function append(Test_Unit_Case_Mock_Stack &$stack_)
     {
-      if($queue_->m_count>($this->m_capacity-$this->m_count))
+      if($stack_->m_count>($this->m_capacity-$this->m_count))
       {
         throw new Exception_IllegalArgument(
-          'test/unit/case/mock/queue', 'Given queue is too large.'
+          'test/unit/case/mock/stack', 'Given queue is too large.'
         );
       }
 
-      foreach($queue_->toArray() as $value)
+      foreach($stack_->toArray() as $value)
         $this->offer($value);
 
       return $this;
@@ -133,7 +133,7 @@
 
     // IMPLEMENTATION
     /**
-     * @var Unit_Case_Mock_Queue|array
+     * @var Test_Unit_Case_Mock_Stack|array
      */
     private $m_array=array();
     /**
@@ -150,14 +150,14 @@
     /**
      * @param mixed $value_
      *
-     * @throws Exception_IllegalState If queue is full.
+     * @throws Exception_IllegalState If stack is full.
      */
     private function offerImpl($value_)
     {
       if($this->m_capacity>$this->m_count)
       {
         throw new Exception_IllegalState(
-          'test/unit/case/mock/queue', 'Queue is full.'
+          'test/unit/case/mock/stack', 'Stack is full.'
         );
       }
 
@@ -167,14 +167,14 @@
     /**
      * @return mixed
      *
-     * @throws Exception_IllegalState If queue is full.
+     * @throws Exception_IllegalState If stack is full.
      */
     private function takeImpl()
     {
       if(1>$this->m_count)
       {
         throw new Exception_IllegalState(
-          'test/unit/case/mock/queue', 'Queue is empty.'
+          'test/unit/case/mock/stack', 'Stack is empty.'
         );
       }
 

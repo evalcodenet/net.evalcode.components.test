@@ -60,6 +60,8 @@
         'result'=>$successful_,
         'message'=>$message_
       ));
+
+      Test_Runner::get()->output->appendAssertion($name_, $successful_, $message_);
     }
 
     public function getAssertions()

@@ -169,14 +169,17 @@
       {
         $testCase_->appendChild($document_->createElement(self::XML_ELEMENT_NAME_SKIPPED));
       }
-      else if(null!==$resultTest_->exception && $resultTest_->hasState(Test_Result::STATE_FAILED))
+      else if($resultTest_->hasState(Test_Result::STATE_FAILED))
       {
-        if($resultTest_->exception->isError)
+        if(null!==$resultTest_->exception && $resultTest_->exception->isError)
           $elementName=self::XML_ELEMENT_NAME_ERROR;
         else
           $elementName=self::XML_ELEMENT_NAME_FAILURE;
 
-        $this->writeTestException($document_, $testCase_, $resultTest_, $elementName);
+        if(null!==$resultTest_->exception)
+          $this->writeTestException($document_, $testCase_, $resultTest_, $elementName);
+        else if($resultTest_->count(Test_Result::TYPE_ASSERTION, Test_Result::STATE_FAILED))
+          $this->writeTestAssertionsFailed($document_, $testCase_, $resultTest_, $elementName);
       }
     }
 
@@ -196,6 +199,21 @@
           $resultTest_->exception->line,
           $resultTest_->exception->traceAsString
       )));
+    }
+
+    protected function writeTestAssertionsFailed(DOMDocument $document_, DOMElement $testCase_, Test_Result $resultTest_, $elementName_)
+    {
+      $element=$document_->createElement($elementName_);
+      $testCase_->appendChild($element);
+
+      $element->setAttribute(self::XML_ATTRIBUTE_NAME_TYPE, 'Assertion_Error');
+      $element->setAttribute(self::XML_ATTRIBUTE_NAME_MESSAGE, 'Assertion Failed');
+
+      $output=array();
+      foreach($resultTest_->collect(Test_Result::TYPE_ASSERTION, Test_Result::STATE_FAILED) as $result)
+        $output[]=$result->output;
+
+      $element->appendChild($document_->createCDATASection(implode(Io::LINE_SEPARATOR_DEFAULT, $output)));
     }
 
     protected function writeSystemOutput(DOMDocument $document_, DOMElement $testSuite_, $output_)

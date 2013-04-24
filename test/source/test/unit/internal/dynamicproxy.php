@@ -248,7 +248,7 @@
       if(null===($method=$this->getMethod($key_)))
         return null;
 
-      // TODO Re-integrate profiler.
+      // FIXME Re-integrate profiling.
       $profileMethod='profileCall';
       //if(Debug_Profiler::forkSupported() && array_key_exists($method->name, $this->m_profileMethodsForked))
         //$profileMethod='profileCallForked';

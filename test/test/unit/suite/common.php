@@ -2,10 +2,10 @@
 
 
   /**
-   * Unit_Suite_Test
+   * Test_Unit_Suite_Common
    *
    * @package net.evalcode.components
-   * @subpackage test.unit
+   * @subpackage test.unit.suite
    *
    * @since 1.0
    * @access public
@@ -14,19 +14,19 @@
    * @copyright Copyright (C) 2012 evalcode.net
    * @license GNU General Public License 3
    */
-  class Unit_Suite_Test implements Test_Unit_Suite
+  class Test_Unit_Suite_Common implements Test_Unit_Suite
   {
     // IMPLEMENTS
     public function name()
     {
-      return 'test/unit/suite';
+      return 'test/unit/suite/common';
     }
 
     public function cases()
     {
       return array(
-        'Unit_Case_Common',
-        'Unit_Case_Mock_Factory'
+        'Test_Unit_Case_Common',
+        'Test_Unit_Case_Mock'
       );
     }
     //--------------------------------------------------------------------------

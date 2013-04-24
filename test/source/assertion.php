@@ -318,7 +318,7 @@
     }
     else
     {
-      if(false===String::indexOf($value_, $pattern_))
+      if(false===String::contains($value_, $pattern_))
       {
         Assertion_Context::current()->add(__FUNCTION__, false, $message);
 
@@ -356,7 +356,7 @@
     }
     else
     {
-      if(false!==String::indexOf($value_, $pattern_))
+      if(String::contains($value_, $pattern_))
       {
         Assertion_Context::current()->add(__FUNCTION__, false, $message);
 
