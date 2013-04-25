@@ -1,6 +1,9 @@
 <?php
 
 
+namespace Components;
+
+
   /**
    * Mock
    *
@@ -18,7 +21,7 @@
   {
     // PROPERTIES
     /**
-     * @var ReflectionClass
+     * @var \ReflectionClass
      */
     public $mockType;
     //--------------------------------------------------------------------------

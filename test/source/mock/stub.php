@@ -1,6 +1,9 @@
 <?php
 
 
+namespace Components;
+
+
   /**
    * Mock_Stub
    *
@@ -43,7 +46,7 @@
       $this->exceptionClazz=$exceptionClazz_;
     }
 
-    public function doAnswer(Closure $answer_)
+    public function doAnswer(\Closure $answer_)
     {
       $this->answer=$answer_;
     }

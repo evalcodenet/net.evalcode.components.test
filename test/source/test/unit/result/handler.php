@@ -1,6 +1,9 @@
 <?php
 
 
+namespace Components;
+
+
   /**
    * Test_Unit_Result_Handler
    *
@@ -104,7 +107,7 @@
       $path='.'==substr($path, 0, 1)?substr($path, 1):$path;
       $name=$path.'.'.$resultCase_->name;
 
-      $document=new DOMDocument('1.0', 'utf-8');
+      $document=new \DOMDocument('1.0', 'utf-8');
       $document->formatOutput=true;
 
       $testSuite=$document->createElement(self::XML_ELEMENT_NAME_TEST_SUITE);
@@ -124,13 +127,13 @@
       $document->save($reportFilePath_);
     }
 
-    protected function writeSuite(DOMDocument $document_, DOMElement $testSuite_, Test_Result $resultCase_, $name_)
+    protected function writeSuite(\DOMDocument $document_, \DOMElement $testSuite_, Test_Result $resultCase_, $name_)
     {
       $host=gethostname();
 
       // TODO Date
-      $date=new DateTime();
-      $date=$date->format(DateTime::ATOM);
+      $date=new \DateTime();
+      $date=$date->format(\DateTime::ATOM);
 
       $tests=$resultCase_->collect(Test_Result::TYPE_TEST, Test_Result::STATE_ALL);
       $failures=$resultCase_->collect(Test_Result::TYPE_TEST, Test_Result::STATE_FAILED);
@@ -159,7 +162,7 @@
       $testSuite_->setAttribute(self::XML_ATTRIBUTE_NAME_TIMESTAMP, $date);
     }
 
-    protected function writeTestResult(DOMDocument $document_, DOMElement $testCase_, Test_Result $resultTest_, $name_)
+    protected function writeTestResult(\DOMDocument $document_, \DOMElement $testCase_, Test_Result $resultTest_, $name_)
     {
       $testCase_->setAttribute(self::XML_ATTRIBUTE_NAME_CLASS_NAME, $name_);
       $testCase_->setAttribute(self::XML_ATTRIBUTE_NAME_NAME, $resultTest_->name);
@@ -183,7 +186,7 @@
       }
     }
 
-    protected function writeTestException(DOMDocument $document_, DOMElement $testCase_, Test_Result $resultTest_, $elementName_)
+    protected function writeTestException(\DOMDocument $document_, \DOMElement $testCase_, Test_Result $resultTest_, $elementName_)
     {
       $element=$document_->createElement($elementName_);
       $testCase_->appendChild($element);
@@ -201,7 +204,7 @@
       )));
     }
 
-    protected function writeTestAssertionsFailed(DOMDocument $document_, DOMElement $testCase_, Test_Result $resultTest_, $elementName_)
+    protected function writeTestAssertionsFailed(\DOMDocument $document_, \DOMElement $testCase_, Test_Result $resultTest_, $elementName_)
     {
       $element=$document_->createElement($elementName_);
       $testCase_->appendChild($element);
@@ -216,7 +219,7 @@
       $element->appendChild($document_->createCDATASection(implode(Io::LINE_SEPARATOR_DEFAULT, $output)));
     }
 
-    protected function writeSystemOutput(DOMDocument $document_, DOMElement $testSuite_, $output_)
+    protected function writeSystemOutput(\DOMDocument $document_, \DOMElement $testSuite_, $output_)
     {
       $systemOutput=$document_->createElement(self::XML_ELEMENT_NAME_SYSTEM_OUTPUT);
       $testSuite_->appendChild($systemOutput);

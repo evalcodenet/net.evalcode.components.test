@@ -1,6 +1,9 @@
 <?php
 
 
+namespace Components;
+
+
   /**
    * Test_Unit_Executor
    *
@@ -132,7 +135,7 @@
       $this->m_runner->output->leaveCase($result_);
     }
 
-    protected function invokeTest(Test_Unit_Internal_DynamicProxy $case_, ReflectionMethod $test_, Test_Result $result_)
+    protected function invokeTest(Test_Unit_Internal_DynamicProxy $case_, \ReflectionMethod $test_, Test_Result $result_)
     {
       Assertion_Context::push(new Assertion_Context());
 

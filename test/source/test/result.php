@@ -1,6 +1,9 @@
 <?php
 
 
+namespace Components;
+
+
   /**
    * Test_Result
    *
@@ -208,7 +211,7 @@
       if(__CLASS__==$class_)
         return;
 
-      $class=new ReflectionClass($class_);
+      $class=new \ReflectionClass($class_);
 
       if(false===$class->isSubclassOf(__CLASS__))
       {

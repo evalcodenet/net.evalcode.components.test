@@ -1,6 +1,9 @@
 <?php
 
 
+namespace Components;
+
+
   /**
    * Test_Runner
    *
@@ -61,7 +64,7 @@
       if(null===$type_)
         $type_=get_called_class();
 
-      $type=new ReflectionClass($type_);
+      $type=new \ReflectionClass($type_);
       if(false===$type->isSubclassOf(__CLASS__))
       {
         throw new Test_Exception('test/runner', sprintf(
@@ -72,8 +75,8 @@
       static::registerAnnotations();
       self::$m_instance=new $type_();
 
-      Runtime::addRuntimeExceptionHandler('Exception', self::$m_instance);
-      Runtime::addRuntimeExceptionHandler('ErrorException', self::$m_instance);
+      Runtime::addRuntimeExceptionHandler('\Exception', self::$m_instance);
+      Runtime::addRuntimeExceptionHandler('\ErrorException', self::$m_instance);
 
       return self::$m_instance;
     }
@@ -126,9 +129,9 @@
 
     public function addPathToClassPath($path_)
     {
-      $iterator=new RecursiveIteratorIterator(
-        new RecursiveDirectoryIterator($path_),
-        RecursiveIteratorIterator::SELF_FIRST
+      $iterator=new \RecursiveIteratorIterator(
+        new \RecursiveDirectoryIterator($path_),
+        \RecursiveIteratorIterator::SELF_FIRST
       );
 
       foreach($iterator as $entry)
@@ -148,9 +151,9 @@
 
     public function addTestPathToClassPath($path_)
     {
-      $iterator=new RecursiveIteratorIterator(
-        new RecursiveDirectoryIterator($path_),
-          RecursiveIteratorIterator::SELF_FIRST
+      $iterator=new \RecursiveIteratorIterator(
+        new \RecursiveDirectoryIterator($path_),
+          \RecursiveIteratorIterator::SELF_FIRST
       );
 
       foreach($iterator as $entry)
@@ -313,7 +316,7 @@
 
 
     // OVERRIDES/IMPLEMENTS
-    public function onException(Exception $e_)
+    public function onException(\Exception $e_)
     {
       die("Tests Failed: ".$e_->getMessage());
     }
@@ -388,9 +391,9 @@
 
     protected function discoverTests()
     {
-      $iterator=new RecursiveIteratorIterator(
-        new RecursiveDirectoryIterator($this->m_testRootPath),
-          RecursiveIteratorIterator::SELF_FIRST
+      $iterator=new \RecursiveIteratorIterator(
+        new \RecursiveDirectoryIterator($this->m_testRootPath),
+          \RecursiveIteratorIterator::SELF_FIRST
       );
 
       if(@is_dir($path=$this->m_testRootPath.'/'.$this->includePathSchema))
@@ -409,7 +412,7 @@
 
       foreach(get_declared_classes() as $declaredClazz)
       {
-        $reflectionClazz=new ReflectionClass($declaredClazz);
+        $reflectionClazz=new \ReflectionClass($declaredClazz);
 
         if($reflectionClazz->isSubclassOf($this->typeTestSuite))
         {

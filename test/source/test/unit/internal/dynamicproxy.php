@@ -1,6 +1,9 @@
 <?php
 
 
+namespace Components;
+
+
   /**
    * Test_Unit_Internal_DynamicProxy
    *
@@ -20,7 +23,7 @@
     public function __construct($class_, Test_Unit_Runner $runner_=null)
     {
       $this->m_runner=$runner_;
-      $this->m_class=new ReflectionClass($class_);
+      $this->m_class=new \ReflectionClass($class_);
 
       $rootPath=realpath($runner_->getTestRootPath());
       $testClassPath=realpath($this->m_class->getFileName());
@@ -29,7 +32,7 @@
 
       $annotations=Annotations::get($class_);
 
-      foreach($this->m_class->getMethods(ReflectionMethod::IS_PUBLIC) as $method)
+      foreach($this->m_class->getMethods(\ReflectionMethod::IS_PUBLIC) as $method)
       {
         if($ignoreAnnotation=$annotations->getMethodAnnotation($method->name, Annotation_Ignore::NAME))
         {
@@ -119,7 +122,7 @@
 
     // ACCESSORS
     /**
-     * @return ReflectionClass
+     * @return \ReflectionClass
      */
     public function getClass()
     {
@@ -154,12 +157,12 @@
       return count($this->m_tests);
     }
 
-    public function skipTest(ReflectionMethod $method_)
+    public function skipTest(\ReflectionMethod $method_)
     {
       return array_key_exists($method_->name, $this->m_skippedTests);
     }
 
-    public function skipTestReason(ReflectionMethod $method_)
+    public function skipTestReason(\ReflectionMethod $method_)
     {
       if(isset($this->m_skippedTestsReasons[$method_->name]))
         return $this->m_skippedTestsReasons[$method_->name];
@@ -167,11 +170,11 @@
       return null;
     }
 
-    public function hasOutput(ReflectionMethod $method_)
+    public function hasOutput(\ReflectionMethod $method_)
     {
       return array_key_exists($method_->name, $this->m_output);
     }
-    public function getOutput(ReflectionMethod $method_)
+    public function getOutput(\ReflectionMethod $method_)
     {
       if(false===$this->hasOutput($method_))
         return null;
@@ -179,7 +182,7 @@
       return $this->m_output[$method_->name];
     }
 
-    public function isFailed(ReflectionMethod $method_)
+    public function isFailed(\ReflectionMethod $method_)
     {
       if(false===array_key_exists($method_->name, $this->m_failed))
         return true;
@@ -187,7 +190,7 @@
       return $this->m_failed[$method_->name];
     }
 
-    public function isFailedExpected(ReflectionMethod $method_)
+    public function isFailedExpected(\ReflectionMethod $method_)
     {
       return array_key_exists($method_->name, $this->m_failedExpected);
     }
@@ -195,7 +198,7 @@
     /**
      * @return Test_Result_Exception
      */
-    public function getException(ReflectionMethod $method_)
+    public function getException(\ReflectionMethod $method_)
     {
       if(false===isset($this->m_exceptions[$method_->name]))
         return null;
@@ -206,7 +209,7 @@
     /**
      * @return Test_Result_Exception
      */
-    public function getExpectedExceptionClass(ReflectionMethod $method_)
+    public function getExpectedExceptionClass(\ReflectionMethod $method_)
     {
       if(false===isset($this->m_exceptionsExpected[$method_->name]))
         return null;
@@ -214,7 +217,7 @@
       return $this->m_exceptionsExpected[$method_->name];
     }
 
-    public function getProfilerResult(ReflectionMethod $method_)
+    public function getProfilerResult(\ReflectionMethod $method_)
     {
       if(false===isset($this->m_profileMethods[$method_->name]))
         return null;
@@ -223,7 +226,7 @@
     }
 
     /**
-     * @return ReflectionMethod
+     * @return \ReflectionMethod
      */
     public function getMethod($name_)
     {
@@ -277,7 +280,7 @@
           else
             $returnValue=$this->m_instance->{$this->m_methods[$method->name]->name}();
         }
-        catch(Exception $e)
+        catch(\Exception $e)
         {
           $this->m_exceptions[$method->name]=Exception_Flat::create($e);
         }
@@ -297,7 +300,7 @@
         }
         else
         {
-          $exceptionReflection=new ReflectionClass($this->m_exceptions[$method->name]);
+          $exceptionReflection=new \ReflectionClass($this->m_exceptions[$method->name]);
           if($exceptionReflection->isSubclassOf($this->m_exceptionsExpected[$method->name]))
             $this->m_failed[$method->name]=false;
         }

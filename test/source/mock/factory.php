@@ -1,6 +1,9 @@
 <?php
 
 
+namespace Components;
+
+
   /**
    * Mock_Factory
    *
@@ -55,7 +58,7 @@
      */
     protected static function mockImpl($type_, array $args_=array())
     {
-      $type=new ReflectionClass($type_);
+      $type=new \ReflectionClass($type_);
 
       if($type->isFinal())
         throw new Exception_IllegalArgument('mock/factory', 'Can not mock final class.');
@@ -72,7 +75,7 @@
 
         if(false===@file_exists($fileName))
         {
-          $source=self::weaveMock($classMock, new ReflectionClass('Mock'), $type);
+          $source=self::weaveMock($classMock, new \ReflectionClass('Mock'), $type);
 
           if(false===@file_put_contents($fileName, $source, 0644))
           {
@@ -87,7 +90,7 @@
 
       if(0<count($args_))
       {
-        $refl=new ReflectionClass($classMock);
+        $refl=new \ReflectionClass($classMock);
         $mock=$refl->newInstanceArgs($args_);
       }
       else
@@ -101,7 +104,7 @@
     }
 
     // FIXME Respect methods defined by inherited interfaces / classes / traits.
-    protected static function weaveMock($classNameMock_, ReflectionClass $mock_, ReflectionClass $type_)
+    protected static function weaveMock($classNameMock_, \ReflectionClass $mock_, \ReflectionClass $type_)
     {
       $mock=@file_get_contents($mock_->getFileName());
       $type=@file_get_contents($type_->getFileName());

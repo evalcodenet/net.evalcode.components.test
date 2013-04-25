@@ -1,6 +1,12 @@
 <?php
 
 
+namespace Test;
+
+
+  use \Components;
+
+
   /**
    * Test_Unit_Case_Common
    *
