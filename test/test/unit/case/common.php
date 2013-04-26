@@ -1,10 +1,7 @@
 <?php
 
 
-namespace Test;
-
-
-  use \Components;
+namespace Components;
 
 
   /**
@@ -13,12 +10,7 @@ namespace Test;
    * @package net.evalcode.components
    * @subpackage test.unit.case
    *
-   * @since 1.0
-   * @access public
-   *
-   * @author Carsten Schipke <carsten.schipke@evalcode.net>
-   * @copyright Copyright (C) 2012 evalcode.net
-   * @license GNU General Public License 3
+   * @author evalcode.net
    */
   class Test_Unit_Case_Common implements Test_Unit_Case
   {
@@ -38,7 +30,7 @@ namespace Test;
      */
     public function testAssertArrayFailed()
     {
-      assertArray(new stdClass());
+      assertArray(new \stdClass());
     }
 
     /**
@@ -419,8 +411,8 @@ namespace Test;
       $a=1;
       $b=1;
 
-      $c=new stdClass();
-      $d=new stdClass();
+      $c=new \stdClass();
+      $d=new \stdClass();
 
       assertEquals($a, $a);
       assertEquals($a, $b);
@@ -471,7 +463,7 @@ namespace Test;
      */
     public function testAssertSame()
     {
-      $a=new stdClass();
+      $a=new \stdClass();
 
       assertSame($a, $a);
     }
@@ -482,8 +474,8 @@ namespace Test;
      */
     public function testAssertSameFailed()
     {
-      $a=new stdClass();
-      $b=new stdClass();
+      $a=new \stdClass();
+      $b=new \stdClass();
 
       assertSame($a, $b);
     }

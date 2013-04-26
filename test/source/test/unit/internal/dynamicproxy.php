@@ -10,12 +10,7 @@ namespace Components;
    * @package net.evalcode.components
    * @subpackage test.unit.internal
    *
-   * @since 1.0
-   * @access public
-   *
-   * @author Carsten Schipke <carsten.schipke@evalcode.net>
-   * @copyright Copyright (C) 2012 evalcode.net
-   * @license GNU General Public License 3
+   * @author evalcode.net
    */
   class Test_Unit_Internal_DynamicProxy
   {
@@ -31,7 +26,6 @@ namespace Components;
       $this->m_path=str_replace("$rootPath/", '', $testClassPath);
 
       $annotations=Annotations::get($class_);
-
       foreach($this->m_class->getMethods(\ReflectionMethod::IS_PUBLIC) as $method)
       {
         if($ignoreAnnotation=$annotations->getMethodAnnotation($method->name, Annotation_Ignore::NAME))

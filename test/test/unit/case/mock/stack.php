@@ -1,10 +1,7 @@
 <?php
 
 
-namespace Test;
-
-
-  use \Components;
+namespace Components;
 
 
   /**
@@ -13,12 +10,7 @@ namespace Test;
    * @package net.evalcode.components
    * @subpackage test.unit.case.mock
    *
-   * @since 1.0
-   * @access public
-   *
-   * @author Carsten Schipke <carsten.schipke@evalcode.net>
-   * @copyright Copyright (C) 2012 evalcode.net
-   * @license GNU General Public License 3
+   * @author evalcode.net
    */
   class Test_Unit_Case_Mock_Stack
   {
@@ -34,7 +26,7 @@ namespace Test;
     /**
      * @param mixed $value_
      *
-     * @return Test_Unit_Case_Mock_Stack
+     * @return \Components\Test_Unit_Case_Mock_Stack
      */
     public function offer($value_=null)
     {
@@ -46,7 +38,7 @@ namespace Test;
     /**
      * @param string $value_
      *
-     * @return Test_Unit_Case_Mock_Stack
+     * @return \Components\Test_Unit_Case_Mock_Stack
      */
     public function offerString($value_='')
     {
@@ -56,7 +48,7 @@ namespace Test;
     }
 
     /**
-     * @return Test_Unit_Case_Mock_Stack
+     * @return \Components\Test_Unit_Case_Mock_Stack
      */
     public function take()
     {
@@ -64,7 +56,7 @@ namespace Test;
     }
 
     /**
-     * @return Test_Unit_Case_Mock_Stack
+     * @return \Components\Test_Unit_Case_Mock_Stack
      */
     public function toArray()
     {
@@ -72,9 +64,9 @@ namespace Test;
     }
 
     /**
-     * @param Test_Unit_Case_Mock_Stack $stack_
+     * @param \Components\Test_Unit_Case_Mock_Stack $stack_
      *
-     * @return Test_Unit_Case_Mock_Stack
+     * @return \Components\Test_Unit_Case_Mock_Stack
      */
     public function append(Test_Unit_Case_Mock_Stack &$stack_)
     {
@@ -139,7 +131,7 @@ namespace Test;
 
     // IMPLEMENTATION
     /**
-     * @var Test_Unit_Case_Mock_Stack|array
+     * @var \Components\Test_Unit_Case_Mock_Stack|array
      */
     private $m_array=array();
     /**

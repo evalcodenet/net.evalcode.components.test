@@ -10,14 +10,9 @@ namespace Components;
    * @package net.evalcode.components
    * @subpackage test
    *
-   * @since 1.0
-   * @access public
-   *
-   * @author Carsten Schipke <carsten.schipke@evalcode.net>
-   * @copyright Copyright (C) 2012 evalcode.net
-   * @license GNU General Public License 3
+   * @author evalcode.net
    */
-  abstract class Test_Runner implements Runtime_Exception_Handler
+  abstract class Test_Runner implements Runtime_Error_Handler
   {
     // PROPERTIES
     /**
@@ -28,11 +23,6 @@ namespace Components;
      * @var string PCRE/Perl-compatible regex pattern for test path exclusion.
      */
     public $excludePattern;
-
-    /**
-     * @var string Path schema for test path inclusion.
-     */
-    public $includePathSchema;
 
     /**
      * @var string
@@ -75,8 +65,7 @@ namespace Components;
       static::registerAnnotations();
       self::$m_instance=new $type_();
 
-      Runtime::addRuntimeExceptionHandler('\Exception', self::$m_instance);
-      Runtime::addRuntimeExceptionHandler('\ErrorException', self::$m_instance);
+      Runtime::addRuntimeErrorHandler(self::$m_instance);
 
       return self::$m_instance;
     }
@@ -107,7 +96,7 @@ namespace Components;
 
       $this->invokeLifecycleListeners(Test_LifecycleListener::INITIALIZATION);
       $this->initialize();
-      $this->discoverTests();
+      $this->discoverTests($this->m_testRootPath);
       $this->getTempPath()->create();
 
       $this->invokeLifecycleListeners(Test_LifecycleListener::EXECUTION);
@@ -149,7 +138,7 @@ namespace Components;
         $this->m_suitesAdded[$class_]=array_push($this->m_suites, $class_);
     }
 
-    public function addTestPathToClassPath($path_)
+    public function addTestPathToClassPath($namespace_=null, $path_)
     {
       $iterator=new \RecursiveIteratorIterator(
         new \RecursiveDirectoryIterator($path_),
@@ -168,15 +157,8 @@ namespace Components;
 
         if(isset($matches[1]))
         {
-          $declared=array_flip(get_declared_classes());
-
           foreach($matches[1] as $type)
-          {
-            if(false===isset($declared[$type]))
-              require_once $entry->getPathname();
-
-            $this->m_testPaths[$type]=$entry->getPathname();
-          }
+            $this->m_testPaths[null===$namespace_?$type:"$namespace_\\$type"]=$entry->getPathname();
         }
       }
     }
@@ -316,7 +298,7 @@ namespace Components;
 
 
     // OVERRIDES/IMPLEMENTS
-    public function onException(\Exception $e_)
+    public function onError(Runtime_ErrorException $e_)
     {
       die("Tests Failed: ".$e_->getMessage());
     }
@@ -389,36 +371,53 @@ namespace Components;
         $listener->{$method_}($this);
     }
 
-    protected function discoverTests()
+    protected function discoverTestPaths($path_)
     {
-      $iterator=new \RecursiveIteratorIterator(
-        new \RecursiveDirectoryIterator($this->m_testRootPath),
-          \RecursiveIteratorIterator::SELF_FIRST
-      );
+      if(is_file($path_.'/.manifest'))
+      {
+        try
+        {
+          $manifest=Manifest::forComponent(basename($path_));
+        }
+        catch(Runtime_Exception $e)
+        {
+          return;
+        }
 
-      if(@is_dir($path=$this->m_testRootPath.'/'.$this->includePathSchema))
-        $this->addTestPathToClassPath($path);
-      else if(@is_dir($path=$this->m_testRootPath) && false!==strpos($path, $this->includePathSchema))
-        $this->addTestPathToClassPath($path);
+        if(is_dir($path=$manifest->getClasspath(Manifest::SOURCE_TYPE_TEST_UNIT)))
+          $this->addTestPathToClassPath($manifest->getNamespace(Manifest::SOURCE_TYPE_TEST_UNIT), $path);
+      }
+
+      $iterator=new \RecursiveIteratorIterator(
+        new \RecursiveDirectoryIterator($path_),
+        \RecursiveIteratorIterator::CHILD_FIRST
+      );
 
       foreach($iterator as $entry)
       {
-        if(false===$entry->isDir())
-          continue;
-
-        if(@is_dir($path=$entry->getRealPath().'/'.$this->includePathSchema))
-          $this->addTestPathToClassPath($path);
+        if($entry->isDir())
+          $this->discoverTestPaths($entry->getPathname());
       }
+    }
 
-      foreach(get_declared_classes() as $declaredClazz)
+    public function __autoload($type_)
+    {
+      if(isset($this->m_testPaths[$type_]))
+        require_once $this->m_testPaths[$type_];
+    }
+
+    protected function discoverTests($path_)
+    {
+      $this->discoverTestPaths($path_);
+
+      spl_autoload_register(array($this, '__autoload'));
+
+      foreach($this->m_testPaths as $clazz=>$path)
       {
-        $reflectionClazz=new \ReflectionClass($declaredClazz);
+        $type=new \ReflectionClass($clazz);
 
-        if($reflectionClazz->isSubclassOf($this->typeTestSuite))
-        {
-          if(null===$this->m_testSuite || $this->m_testSuite==$declaredClazz)
-            $this->addTestSuite($declaredClazz);
-        }
+        if($type->isSubclassOf($this->typeTestSuite))
+          $this->addTestSuite($clazz);
       }
     }
 

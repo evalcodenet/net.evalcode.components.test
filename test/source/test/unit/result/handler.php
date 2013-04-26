@@ -10,12 +10,7 @@ namespace Components;
    * @package net.evalcode.components
    * @subpackage test.unit.result
    *
-   * @since 1.0
-   * @access public
-   *
-   * @author Carsten Schipke <carsten.schipke@evalcode.net>
-   * @copyright Copyright (C) 2012 evalcode.net
-   * @license GNU General Public License 3
+   * @author evalcode.net
    */
   class Test_Unit_Result_Handler implements Test_Result_Handler
   {
@@ -142,7 +137,7 @@ namespace Components;
       $countErrors=0;
       foreach($failures as $failure)
       {
-        if(null!==$failure->exception && $failure->exception->isError)
+        if(null!==$failure->exception && $failure->exception->isErrorException)
           $countErrors++;
       }
 
@@ -174,7 +169,7 @@ namespace Components;
       }
       else if($resultTest_->hasState(Test_Result::STATE_FAILED))
       {
-        if(null!==$resultTest_->exception && $resultTest_->exception->isError)
+        if(null!==$resultTest_->exception && $resultTest_->exception->isErrorException)
           $elementName=self::XML_ELEMENT_NAME_ERROR;
         else
           $elementName=self::XML_ELEMENT_NAME_FAILURE;

@@ -10,12 +10,7 @@ namespace Components;
    * @package net.evalcode.components
    * @subpackage test.mock
    *
-   * @since 1.0
-   * @access public
-   *
-   * @author Carsten Schipke <carsten.schipke@evalcode.net>
-   * @copyright Copyright (C) 2012 evalcode.net
-   * @license GNU General Public License 3
+   * @author evalcode.net
    */
   class Mock_Factory
   {
@@ -56,6 +51,7 @@ namespace Components;
     /**
      * @return Mock
      */
+    // FIXME (CSH) Support namespaces correctly.
     protected static function mockImpl($type_, array $args_=array())
     {
       $type=new \ReflectionClass($type_);
@@ -64,8 +60,8 @@ namespace Components;
         throw new Exception_IllegalArgument('mock/factory', 'Can not mock final class.');
 
       $mtime=@filemtime($type->getFileName());
+      $classMock='Mock_'.str_replace('\\', '_', $type->getNamespaceName()).'_'.$type->getShortName()."_$mtime";
 
-      $classMock='Mock_'.$type_.'_'.$mtime;
       if(false===@class_exists($classMock))
       {
         if(null===self::$m_tmpPath)
@@ -75,7 +71,7 @@ namespace Components;
 
         if(false===@file_exists($fileName))
         {
-          $source=self::weaveMock($classMock, new \ReflectionClass('Mock'), $type);
+          $source=self::weaveMock($classMock, new \ReflectionClass('\\Components\\Mock'), $type);
 
           if(false===@file_put_contents($fileName, $source, 0644))
           {
@@ -87,6 +83,8 @@ namespace Components;
 
         require_once $fileName;
       }
+
+      $classMock="\\Components\\$classMock";
 
       if(0<count($args_))
       {
@@ -198,7 +196,7 @@ namespace Components;
       $source=implode(Io::LINE_SEPARATOR_DEFAULT, $source).Io::LINE_SEPARATOR_DEFAULT.'  }'.Io::LINE_SEPARATOR_DEFAULT.'?>';
       $inheritance=$type_->isInterface()?'implements':'extends';
 
-      return str_replace('class Mock', "class $classNameMock_ $inheritance {$type_->name}", $source);
+      return str_replace('class Mock', "class $classNameMock_ $inheritance \\{$type_->name}", $source);
     }
     //--------------------------------------------------------------------------
   }

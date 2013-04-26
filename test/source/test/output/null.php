@@ -10,12 +10,7 @@ namespace Components;
    * @package net.evalcode.components
    * @subpackage test.output
    *
-   * @since 1.0
-   * @access public
-   *
-   * @author Carsten Schipke <carsten.schipke@evalcode.net>
-   * @copyright Copyright (C) 2012 evalcode.net
-   * @license GNU General Public License 3
+   * @author evalcode.net
    */
   class Test_Output_Null implements Test_Output
   {

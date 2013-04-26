@@ -10,10 +10,7 @@ namespace Components;
    * @package net.evalcode.components
    * @subpackage test
    *
-   * @since 1.0
-   * @access public
-   *
-   * @author Carsten Schipke <carsten.schipke@evalcode.net>
+   * @author evalcode.net
    * @copyright Copyright (C); 2012 evalcode.net
    * @license GNU General License 3
    */
