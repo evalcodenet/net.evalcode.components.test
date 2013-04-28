@@ -14,7 +14,7 @@ namespace Components;
    */
   final class Annotation_Test extends Annotation
   {
-    // CONSTANTS
+    // PREDEFINED PROPERTIES
     const NAME='Test';
     const TYPE=__CLASS__;
     //--------------------------------------------------------------------------

@@ -794,7 +794,21 @@ namespace Components;
       'Expected two equal values', __FUNCTION__, func_get_args()
     );
 
-    $result=$expectedValue_==$actualValue_;
+    if($expectedValue_ instanceof Object)
+    {
+      try
+      {
+        $result=$expectedValue_->equals($actualValue_);
+      }
+      catch(\Exception $e)
+      {
+        $result=false;
+      }
+    }
+    else
+    {
+      $result=$expectedValue_==$actualValue_;
+    }
 
     Assertion_Context::current()->add(__FUNCTION__, $result, $message);
 
@@ -814,7 +828,21 @@ namespace Components;
       'Expected two different values', __FUNCTION__, func_get_args()
     );
 
-    $result=$expectedValue_!=$actualValue_;
+    if($expectedValue_ instanceof Object)
+    {
+      try
+      {
+        $result=!$expectedValue_->equals($actualValue_);
+      }
+      catch(\Exception $e)
+      {
+        $result=true;
+      }
+    }
+    else
+    {
+      $result=$expectedValue_!=$actualValue_;
+    }
 
     Assertion_Context::current()->add(__FUNCTION__, $result, $message);
 
@@ -833,7 +861,21 @@ namespace Components;
       'Expected two equal values', __FUNCTION__, func_get_args()
     );
 
-    $result=$expectedValue_==$actualValue_;
+    if($expectedValue_ instanceof Object)
+    {
+      try
+      {
+        $result=$expectedValue_->equals($actualValue_);
+      }
+      catch(\Exception $e)
+      {
+        $result=false;
+      }
+    }
+    else
+    {
+      $result=$expectedValue_==$actualValue_;
+    }
 
     Assertion_Context::current()->add(__FUNCTION__, $result, $message);
 
@@ -852,7 +894,21 @@ namespace Components;
       'Expected two different values', __FUNCTION__, func_get_args()
     );
 
-    $result=$expectedValue_!=$actualValue_;
+    if($expectedValue_ instanceof Object)
+    {
+      try
+      {
+        $result=!$expectedValue_->equals($actualValue_);
+      }
+      catch(\Exception $e)
+      {
+        $result=true;
+      }
+    }
+    else
+    {
+      $result=$expectedValue_!=$actualValue_;
+    }
 
     Assertion_Context::current()->add(__FUNCTION__, $result, $message);
 

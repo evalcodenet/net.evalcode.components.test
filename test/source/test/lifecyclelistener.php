@@ -14,7 +14,7 @@ namespace Components;
    */
   interface Test_LifecycleListener
   {
-    // CONSTANTS
+    // PREDEFINED PROPERTIES
     const INITIALIZATION='initialization';
     const EXECUTION='execution';
     const TERMINATION='termination';

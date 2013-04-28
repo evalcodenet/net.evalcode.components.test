@@ -14,7 +14,7 @@ namespace Components;
    */
   class Test_Result
   {
-    // CONSTANTS
+    // PREDEFINED PROPERTIES
     const TYPE_ROOT=1;
     const TYPE_SUITE=2;
     const TYPE_CASE=4;

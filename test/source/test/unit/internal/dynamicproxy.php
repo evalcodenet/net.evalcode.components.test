@@ -239,7 +239,7 @@ namespace Components;
     //--------------------------------------------------------------------------
 
 
-    // IMPLEMENTS
+    // OVERRIDES/IMPLEMENTS
     public function __call($key_, $args_)
     {
       if(null===($method=$this->getMethod($key_)))

@@ -14,7 +14,7 @@ namespace Components;
    */
   class Test_Unit_Result_Handler implements Test_Result_Handler
   {
-    // CONSTANTS
+    // PREDEFINED PROPERTIES
     const DEFAULT_REPORT_FILE_NAME_PREFIX='TEST-';
     const DEFAULT_REPORT_FILE_NAME_SUFFIX='.xml';
 
@@ -53,7 +53,7 @@ namespace Components;
     //--------------------------------------------------------------------------
 
 
-    // IMPLEMENTS
+    // OVERRIDES/IMPLEMENTS
     /**
      * @see Test_Result_Handler::handleResult()
      */

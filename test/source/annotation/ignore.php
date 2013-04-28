@@ -14,7 +14,7 @@ namespace Components;
    */
   final class Annotation_Ignore extends Annotation
   {
-    // CONSTANTS
+    // PREDEFINED PROPERTIES
     const NAME='Ignore';
     const TYPE=__CLASS__;
     //--------------------------------------------------------------------------

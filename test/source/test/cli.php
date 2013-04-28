@@ -65,7 +65,7 @@ namespace Components;
         return;
       }
 
-      Runtime::disableCaching();
+      Cache::disable();
 
       $test=Test_Unit_Runner::create();
       $test->output=new Test_Output_Console($this);
@@ -81,7 +81,7 @@ namespace Components;
 
       $test->run();
 
-      Runtime::enableCaching();
+      Cache::enable();
 
       $this->close();
     }

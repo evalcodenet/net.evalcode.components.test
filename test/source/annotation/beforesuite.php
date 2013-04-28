@@ -14,7 +14,7 @@ namespace Components;
    */
   final class Annotation_BeforeSuite extends Annotation
   {
-    // CONSTANTS
+    // PREDEFINED PROPERTIES
     const NAME='BeforeSuite';
     const TYPE=__CLASS__;
     //--------------------------------------------------------------------------
