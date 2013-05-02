@@ -474,10 +474,16 @@ namespace Components;
      */
     public function testAssertSameFailed()
     {
+      split_time('a');
       $a=new \stdClass();
+      split_time('b');
       $b=new \stdClass();
 
+      echo 'Here could be a reason or a hint on how to activate the skipped test. Here could be a reason or a hint on how to activate the skipped test. Here could be a reason or a hint on how to activate the skipped test. Here could be a reason or a hint on how to activate the skipped test. Here could be a reason or a hint on how to activate the skipped test. Here could be a reason or a hint on how to activate the skipped test.';
+
+      split_time('before same');
       assertSame($a, $b);
+      split_time('after same');
     }
 
     /**

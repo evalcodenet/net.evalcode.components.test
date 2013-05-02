@@ -18,6 +18,7 @@ namespace Components;
     /**
      * @Test
      * @Profile(fork)
+     * @Ignore(ignoreUntilFixed)
      */
     public function mockFactory()
     {
@@ -28,16 +29,16 @@ namespace Components;
       $mockExceptionDefault=Mock_Factory::mock('\\Components\\Test_Exception');
 
       $mockRunner=Mock_Factory::mock('\\Components\\Test_Runner');
-      $mockLL=Mock_Factory::mock('\\Components\\Test_LifecycleListener');
+      $mockListener=Mock_Factory::mock('\\Components\\Test_Listener');
 
-      $mockLL->when('execution')->doReturn(true);
-      $mockLL->when('initialization')->doReturn(true);
-      $mockLL->when('termination')->doNothing();
+      $mockListener->when('onInitialize')->doReturn(true);
+      $mockListener->when('onExecute')->doReturn(true);
+      $mockListener->when('onTerminate')->doNothing();
 
-      assertTrue($mockLL->execution($mockRunner));
-      assertTrue($mockLL->initialization($mockRunner));
+      assertTrue($mockListener->onExecute($mockRunner));
+      assertTrue($mockListener->onInitialize($mockRunner));
 
-      $mockLL->termination($mockRunner);
+      $mockLL->onTerminate($mockRunner);
 
       assertEquals('test/unit/case/mock', $mockException->getNamespace());
       assertEquals('Mocked Exception.', $mockException->getMessage());
@@ -76,6 +77,7 @@ namespace Components;
     /**
      * @Test
      * @Profile(fork)
+     * @Ignore(ignoreUntilFixed)
      */
     public function mockMethods()
     {
@@ -89,6 +91,14 @@ namespace Components;
       $stack->when('increaseCapacity')->doNothing();
       $stack->increaseCapacity(1);
       assertEquals(100, $stack->getCapacity());
+    }
+    //--------------------------------------------------------------------------
+
+
+    // STATIC ACCESSORS
+    public static function ignoreUntilFixed()
+    {
+      return 'Fix class weaving, support namespaces and inheritance of parent type hierarchy';
     }
     //--------------------------------------------------------------------------
   }

@@ -78,12 +78,12 @@ namespace Components;
           if(null!==$expectedException)
             $this->m_exceptionsExpected[$method->name]=$expectedException;
 
-          if(null!=$expectedFail && 'false'!=trim(strtolower($expectedFail)))
+          if(null!=$expectedFail && 'false'!==trim(strtolower($expectedFail)))
             $this->m_failedExpected[$method->name]=true;
         }
 
         /*
-         * Search for before-/AfterMethod/-Class/-Suite annotations
+         * Search for Before-/AfterMethod/-Class/-Suite annotations
          * Only the first occurence per method will be respected.
          */
         foreach(self::$m_staticAnnotations as $staticAnnotation)
@@ -106,15 +106,10 @@ namespace Components;
         }
       }
     }
-
-    public function isInstanceOf($class_)
-    {
-      return $this->m_class->isSubclassOf($class_) || $this->m_class->implementsInterface($class_);
-    }
     //--------------------------------------------------------------------------
 
 
-    // ACCESSORS
+    // ACCESSORS/MUTATORS
     /**
      * @return \ReflectionClass
      */
@@ -123,6 +118,19 @@ namespace Components;
       return $this->m_class;
     }
 
+    /**
+     * @param string $class_
+     *
+     * @return boolean
+     */
+    public function isInstanceOf($class_)
+    {
+      return $this->m_class->isSubclassOf($class_) || $this->m_class->implementsInterface($class_);
+    }
+
+    /**
+     * @return \Components\Test_Unit_Internal_DynamicProxy
+     */
     public function createInstance()
     {
       if(null===$this->m_instance)
@@ -134,6 +142,7 @@ namespace Components;
 
       return $this->m_instance;
     }
+
     public function destroyInstance()
     {
       unset($this->m_instance);
@@ -141,33 +150,60 @@ namespace Components;
       $this->m_instance=null;
     }
 
+    /**
+     * @return array|\ReflectionMethod
+     */
     public function getTests()
     {
       return $this->m_tests;
     }
 
+    /**
+     * @return int
+     */
     public function countTests()
     {
       return count($this->m_tests);
     }
 
+    /**
+     * @param \ReflectionMethod $method_
+     *
+     * @return boolean
+     */
     public function skipTest(\ReflectionMethod $method_)
     {
       return array_key_exists($method_->name, $this->m_skippedTests);
     }
 
+    /**
+     * @param \ReflectionMethod $method_
+     *
+     * @return string
+     */
     public function skipTestReason(\ReflectionMethod $method_)
     {
-      if(isset($this->m_skippedTestsReasons[$method_->name]))
-        return $this->m_skippedTestsReasons[$method_->name];
+      if(false===isset($this->m_skippedTestsReasons[$method_->name]))
+        return null;
 
-      return null;
+      return $this->m_skippedTestsReasons[$method_->name];
     }
 
+    /**
+     * @param \ReflectionMethod $method_
+     *
+     * @return boolean
+     */
     public function hasOutput(\ReflectionMethod $method_)
     {
       return array_key_exists($method_->name, $this->m_output);
     }
+
+    /**
+     * @param \ReflectionMethod $method_
+     *
+     * @return string
+     */
     public function getOutput(\ReflectionMethod $method_)
     {
       if(false===$this->hasOutput($method_))
@@ -176,6 +212,11 @@ namespace Components;
       return $this->m_output[$method_->name];
     }
 
+    /**
+     * @param \ReflectionMethod $method_
+     *
+     * @return boolean
+     */
     public function isFailed(\ReflectionMethod $method_)
     {
       if(false===array_key_exists($method_->name, $this->m_failed))
@@ -184,13 +225,20 @@ namespace Components;
       return $this->m_failed[$method_->name];
     }
 
+    /**
+     * @param \ReflectionMethod $method_
+     *
+     * @return boolean
+     */
     public function isFailedExpected(\ReflectionMethod $method_)
     {
       return array_key_exists($method_->name, $this->m_failedExpected);
     }
 
     /**
-     * @return Test_Result_Exception
+     * @param \ReflectionMethod $method_
+     *
+     * @return \Components\Exception_Flat
      */
     public function getException(\ReflectionMethod $method_)
     {
@@ -201,7 +249,9 @@ namespace Components;
     }
 
     /**
-     * @return Test_Result_Exception
+     * @param \ReflectionMethod $method_
+     *
+     * @return \Components\Exception_Flat
      */
     public function getExpectedExceptionClass(\ReflectionMethod $method_)
     {
@@ -211,6 +261,11 @@ namespace Components;
       return $this->m_exceptionsExpected[$method_->name];
     }
 
+    /**
+     * @param \ReflectionMethod $method_
+     *
+     * @return \Components\Test_Profiler
+     */
     public function getProfilerResult(\ReflectionMethod $method_)
     {
       if(false===isset($this->m_profileMethods[$method_->name]))
@@ -220,6 +275,8 @@ namespace Components;
     }
 
     /**
+     * @param string $name_
+     *
      * @return \ReflectionMethod
      */
     public function getMethod($name_)
@@ -232,6 +289,9 @@ namespace Components;
       return null;
     }
 
+    /**
+     * @return string
+     */
     public function getPath()
     {
       return $this->m_path;
@@ -247,16 +307,15 @@ namespace Components;
 
       // FIXME Re-integrate profiling.
       $profileMethod='profileCall';
-      //if(Debug_Profiler::forkSupported() && array_key_exists($method->name, $this->m_profileMethodsForked))
-        //$profileMethod='profileCallForked';
+      if(Test_Profiler::isForkedProfilingSupported() && array_key_exists($method->name, $this->m_profileMethodsForked))
+        $profileMethod='profileCallForked';
 
       ob_start();
 
       $returnValue=null;
-/*
       if(true===array_key_exists($method->name, $this->m_profileMethods))
       {
-        $this->m_profileMethods[$method->name]=Debug_Profiler::$profileMethod(
+        $this->m_profileMethods[$method->name]=Test_Profiler::$profileMethod(
           array($this->m_instance, $this->m_methods[$method->name]->name)
         );
 
@@ -266,7 +325,7 @@ namespace Components;
         $returnValue=$this->m_profileMethods[$method->name]->returnValue();
       }
       else
-      {*/
+      {
         try
         {
           if($this->m_methods[$method->name]->isStatic())
@@ -278,10 +337,9 @@ namespace Components;
         {
           $this->m_exceptions[$method->name]=Exception_Flat::create($e);
         }
-     // }
+      }
 
       $this->m_failed[$method->name]=true;
-
       if(false===isset($this->m_exceptionsExpected[$method->name]) && false===isset($this->m_exceptions[$method->name]))
       {
         $this->m_failed[$method->name]=false;

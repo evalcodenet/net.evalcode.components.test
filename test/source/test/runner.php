@@ -23,6 +23,10 @@ namespace Components;
      * @var string PCRE/Perl-compatible regex pattern for test path exclusion.
      */
     public $excludePattern;
+    /**
+     * @var string
+     */
+    public $configuration;
 
     /**
      * @var string
@@ -34,17 +38,22 @@ namespace Components;
     public $typeTestSuite;
 
     /**
-     * @var Test_Output
+     * @var \Components\Test_Output
      */
     public $output;
 
+    /**
+     * @var array|string
+     */
     public static $fileExtensionsPhp=array('php', 'phps');
     //--------------------------------------------------------------------------
 
 
     // STATIC ACCESSORS
     /**
-     * @return Test_Runner
+     * @param string $type_
+     *
+     * @return \Components\Test_Runner
      */
     public static function create($type_=null)
     {
@@ -57,7 +66,7 @@ namespace Components;
       $type=new \ReflectionClass($type_);
       if(false===$type->isSubclassOf(__CLASS__))
       {
-        throw new Test_Exception('test/runner', sprintf(
+        throw new Exception_IllegalArgument('test/runner', sprintf(
           'Passed class must extend %1$s [class: %2$s].', __CLASS__, $type_
         ));
       }
@@ -71,7 +80,7 @@ namespace Components;
     }
 
     /**
-     * @return Test_Runner
+     * @return \Components\Test_Runner
      */
     public static function get()
     {
@@ -81,8 +90,14 @@ namespace Components;
 
 
     // ACCESSORS
+    /**
+     * @throws Exception_IllegalState
+     */
     public function run()
     {
+      if(null!==$this->configuration)
+        include_once $this->configuration;
+
       if(null===$this->m_buildPath)
         throw new Exception_IllegalState('test/runner', 'Build path must be specified.');
       if(null===$this->m_testRootPath)
@@ -94,20 +109,26 @@ namespace Components;
       if(null===$this->m_result)
         $this->m_result=new Test_Result();
 
-      $this->invokeLifecycleListeners(Test_LifecycleListener::INITIALIZATION);
+      $this->invokeListeners(Test_Listener::INITIALIZATION);
       $this->initialize();
       $this->discoverTests($this->m_testRootPath);
-      $this->getTempPath()->create();
 
-      $this->invokeLifecycleListeners(Test_LifecycleListener::EXECUTION);
+      $tmp=$this->getTempPath()->create();
+
+      $this->invokeListeners(Test_Listener::EXECUTION);
       $this->execute();
 
       $this->invokeResultHandler($this->m_result);
+      $this->invokeListeners(Test_Listener::TERMINATION);
 
-      $this->invokeLifecycleListeners(Test_LifecycleListener::TERMINATION);
-      $this->getTempPath()->delete(true);
+      $tmp->delete(true);
     }
 
+    /**
+     * @param string $path_
+     *
+     * @throws \Components\Exception_IllegalArgument
+     */
     public function addClass($path_)
     {
       if(false===$this->validSourceFile($path_))
@@ -116,6 +137,9 @@ namespace Components;
       require_once $path_;
     }
 
+    /**
+     * @param string $path_
+     */
     public function addPathToClassPath($path_)
     {
       $iterator=new \RecursiveIteratorIterator(
@@ -132,13 +156,20 @@ namespace Components;
       }
     }
 
+    /**
+     * @param string $class_
+     */
     public function addTestSuite($class_)
     {
       if(false===array_key_exists($class_, $this->m_suitesAdded))
         $this->m_suitesAdded[$class_]=array_push($this->m_suites, $class_);
     }
 
-    public function addTestPathToClassPath($namespace_=null, $path_)
+    /**
+     * @param string $namespace_
+     * @param string $path_
+     */
+    public function addTestPathToClassPath($path_, $namespace_=null)
     {
       $iterator=new \RecursiveIteratorIterator(
         new \RecursiveDirectoryIterator($path_),
@@ -164,34 +195,42 @@ namespace Components;
     }
 
     /**
-     * @return Io_Path
+     * @return \Components\Io_Path
      */
     public function getTempPath()
     {
-      return Io::path($this->m_buildPath)->tmp;
+      return Io::path($this->getBuildPath())->tmp;
     }
 
     /**
-     * @return Io_Path
+     * @return string
      */
     public function getBuildPath()
     {
-      return Io::path($this->m_buildPath);
+      return $this->m_buildPath;
     }
 
+    /**
+     * @param string $path_
+     */
     public function setBuildPath($path_)
     {
       $this->m_buildPath=$path_;
     }
 
     /**
-     * @return Io_Path
+     * @return string
      */
     public function getTestRootPath()
     {
-      return Io::path($this->m_testRootPath);
+      return $this->m_testRootPath;
     }
 
+    /**
+     * @param string $path_
+     *
+     * @throws \Components\Exception_IllegalArgument
+     */
     public function setTestRootPath($path_)
     {
       if(false===$this->validPath($path_))
@@ -200,23 +239,32 @@ namespace Components;
       $this->m_testRootPath=$path_;
     }
 
+    /**
+     * @return string
+     */
     public function getTestSuite()
     {
       return $this->m_testSuite;
     }
 
+    /**
+     * @param string $class_
+     */
     public function setTestSuite($class_)
     {
       $this->m_testSuite=$class_;
     }
 
+    /**
+     * @return array|string
+     */
     public function getTestPaths()
     {
       return $this->m_testPaths;
     }
 
     /**
-     * @return Test_Result
+     * @return \Components\Test_Result
      */
     public function getResult()
     {
@@ -224,36 +272,40 @@ namespace Components;
     }
 
     /**
-     * @param Test_Result $result_
+     * @param \Components\Test_Result $result_
      */
     public function setResult(Test_Result $result_)
     {
       $this->m_result=$result_;
     }
 
-    public function getResultHandler()
+    /**
+     * @return \Components\Test_Result_Handler
+     */
+    public function getResultHandlers()
     {
-      return $this->m_resultHandler;
-    }
-
-    public function addResultHandler(Test_Result_Handler $resultHandler_)
-    {
-      array_push($this->m_resultHandler, $resultHandler_);
-    }
-
-    public function invokeResultHandler(Test_Result $result_)
-    {
-      foreach($this->m_resultHandler as $resultHandler)
-        $resultHandler->handleResult($result_);
-    }
-
-    public function setInjector(Injector $injector_)
-    {
-      $this->m_injector=$injector_;
+      return $this->m_resultHandlers;
     }
 
     /**
-     * @return Injector
+     * @param \Components\Test_Result_Handler $resultHandler_
+     */
+    public function addResultHandler(Test_Result_Handler $resultHandler_)
+    {
+      array_push($this->m_resultHandlers, $resultHandler_);
+    }
+
+    /**
+     * @param \Components\Test_Result $result_
+     */
+    public function invokeResultHandler(Test_Result $result_)
+    {
+      foreach($this->m_resultHandlers as $resultHandler)
+        $resultHandler->handleResult($result_);
+    }
+
+    /**
+     * @return \Components\Injector
      */
     public function getInjector()
     {
@@ -264,7 +316,15 @@ namespace Components;
     }
 
     /**
-     * @return Binding_Module
+     * @param \Components\Injector $injector_
+     */
+    public function setInjector(Injector $injector_)
+    {
+      $this->m_injector=$injector_;
+    }
+
+    /**
+     * @return \Components\Binding_Module
      */
     public function getBindingModule()
     {
@@ -274,33 +334,77 @@ namespace Components;
       return $this->m_bindingModule;
     }
 
+    /**
+     * @param \Components\Binding_Module $bindingModule_
+     */
     public function setBindingModule(Binding_Module $bindingModule_)
     {
       $this->m_bindingModule=$bindingModule_;
     }
 
-    public function addLifecycleListener(Test_LifecycleListener $lifecycleListener_)
+    /**
+     * @param \Components\Test_Listener $listener_
+     */
+    public function addListener(Test_Listener $listener_)
     {
-      array_push($this->m_lifecycleListeners, $lifecycleListener_);
+      array_push($this->m_listeners, $listener_);
     }
 
-    public function removeLifecycleListener(Test_LifecycleListener $lifecycleListener_)
+    /**
+     * @param \Components\Test_Listener $listener_
+     */
+    public function removeListener(Test_Listener $listener_)
     {
-      $lifecycleListenerId=$lifecycleListener_->hashCode();
+      $listenerId=$listener_->hashCode();
 
-      foreach($this->m_lifecycleListeners as $key=>$lifecycleListener)
+      /* @var $listener Test_Listener */
+      foreach($this->m_listeners as $key=>$listener)
       {
-        if($lifecycleListenerId==$lifecycleListener->hashCode())
-          unset($this->m_lifecycleListeners[$key]);
+        if($listenerId===$listener->hashCode())
+          unset($this->m_listeners[$key]);
       }
     }
     //--------------------------------------------------------------------------
 
 
     // OVERRIDES/IMPLEMENTS
+    /**
+     * (non-PHPdoc)
+     * @see Components.Runtime_Error_Handler::onError()
+     */
     public function onError(Runtime_ErrorException $e_)
     {
-      die("Tests Failed: ".$e_->getMessage());
+      return false;
+    }
+
+    /**
+     * (non-PHPdoc)
+     * @see Components.Object::equals()
+     */
+    public function equals($object_)
+    {
+      if($object_ instanceof self)
+        return $this->hashCode()===$object_->hashCode();
+
+      return false;
+    }
+
+    /**
+     * (non-PHPdoc)
+     * @see Components.Object::hashCode()
+     */
+    public function hashCode()
+    {
+      return object_hash($this);
+    }
+
+    /**
+     * (non-PHPdoc)
+     * @see Components.Object::__toString()
+     */
+    public function __toString()
+    {
+      return sprintf('%s@%s{}', __CLASS__, $this->hashCode());
     }
     //--------------------------------------------------------------------------
 
@@ -312,27 +416,36 @@ namespace Components;
     protected static $m_annotationsRegistered=false;
 
     /**
-     * @var Test_LifecycleListener|array
+     * @var \Components\Test_Runner
      */
-    protected $m_lifecycleListeners=array();
+    private static $m_instance;
+
     /**
-     * @var Test_Result_Handler|array
+     * @var array|Test_Listener
      */
-    protected $m_resultHandler=array();
+    protected $m_listeners=array();
     /**
-     * @var string|array
+     * @var array|\Components\Test_Result_Handler
+     */
+    protected $m_resultHandlers=array();
+    /**
+     * @var array|string
      */
     protected $m_suites=array();
     /**
-     * @var string|array
+     * @var array|string
      */
     protected $m_suitesAdded=array();
     /**
-     * @var Binding_Module
+     * @var array|string
+     */
+    protected $m_testPaths=array();
+    /**
+     * @var \Components\Binding_Module
      */
     protected $m_bindingModule;
     /**
-     * @var Injector
+     * @var \Components\Injector
      */
     protected $m_injector;
     /**
@@ -340,7 +453,7 @@ namespace Components;
      */
     protected $m_buildPath;
     /**
-     * @var Test_Result
+     * @var \Components\Test_Result
      */
     protected $m_result;
     /**
@@ -351,12 +464,6 @@ namespace Components;
      * @var string
      */
     protected $m_testSuite;
-    protected $m_testPaths=array();
-
-    /**
-     * @var Test_Runner
-     */
-    private static $m_instance;
     //-----
 
 
@@ -365,11 +472,6 @@ namespace Components;
     protected abstract function initialize();
     protected abstract function execute();
 
-    protected function invokeLifecycleListeners($method_)
-    {
-      foreach($this->m_lifecycleListeners as $listener)
-        $listener->{$method_}($this);
-    }
 
     protected function discoverTestPaths($path_)
     {
@@ -385,7 +487,7 @@ namespace Components;
         }
 
         if(is_dir($path=$manifest->getClasspath(Manifest::SOURCE_TYPE_TEST_UNIT)))
-          $this->addTestPathToClassPath($manifest->getNamespace(Manifest::SOURCE_TYPE_TEST_UNIT), $path);
+          $this->addTestPathToClassPath($path, $manifest->getNamespace(Manifest::SOURCE_TYPE_TEST_UNIT));
       }
 
       $iterator=new \RecursiveIteratorIterator(
@@ -398,12 +500,6 @@ namespace Components;
         if($entry->isDir())
           $this->discoverTestPaths($entry->getPathname());
       }
-    }
-
-    public function __autoload($type_)
-    {
-      if(isset($this->m_testPaths[$type_]))
-        require_once $this->m_testPaths[$type_];
     }
 
     protected function discoverTests($path_)
@@ -451,6 +547,22 @@ namespace Components;
     protected function validSourceFile($path_)
     {
       return in_array(strtolower(substr($path_, strrpos($path_, '.')+1)), self::$fileExtensionsPhp);
+    }
+
+    protected function invokeListeners($method_)
+    {
+      foreach($this->m_listeners as $listener)
+        $listener->{$method_}($this);
+    }
+
+    public function __autoload($type_)
+    {
+      if(false===isset($this->m_testPaths[$type_]))
+        return false;
+
+      require_once $this->m_testPaths[$type_];
+
+      return true;
     }
 
 

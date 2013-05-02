@@ -16,14 +16,15 @@ namespace Components;
   {
     // STATIC ACCESSORS
     /**
-     * @return Test_Cli
+     * @return \Components\Test_Cli
      */
     public static function get()
     {
-      $instance=new self();
+      $instance=new static();
 
       $instance->addOption('p', true, null, 'test root path', 'path');
       $instance->addOption('b', true, null, 'build path', 'build');
+      $instance->addOption('c', true, null, 'configuration path', 'config');
 
       $instance->addEmptyOption();
       $instance->addOption('e', true, null, 'exclude test suites matching given PCRE-compatible regex pattern', 'exclude');
@@ -70,14 +71,22 @@ namespace Components;
       $test=Test_Unit_Runner::create();
       $test->output=new Test_Output_Console($this);
 
-      if($this->hasArgument('path'))
-        $test->setTestRootPath($this->getArgument('path'));
       if($this->hasArgument('build'))
         $test->setBuildPath($this->getArgument('build'));
       if($this->hasArgument('exclude'))
         $test->excludePattern=$this->getArgument('exclude');
       if($this->hasArgument('include'))
         $test->includePattern=$this->getArgument('include');
+      if($this->hasArgument('path'))
+        $test->setTestRootPath($this->getArgument('path'));
+
+      if($this->hasArgument('config'))
+      {
+        if(false===is_file($configuration=$this->getArgument('config')))
+          throw new Exception_IllegalArgument('components/test/cli', 'Argument \'config\' must point to a valid file.');
+
+        $test->configuration=$configuration;
+      }
 
       $test->run();
 

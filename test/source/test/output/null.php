@@ -59,6 +59,11 @@ namespace Components;
     {
       // Do nothing ...
     }
+
+    public function appendLine($string_='')
+    {
+      // Do nothing ...
+    }
     //--------------------------------------------------------------------------
   }
 ?>

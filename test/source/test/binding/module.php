@@ -14,7 +14,7 @@ namespace Components;
    */
   class Test_Binding_Module extends Binding_Module
   {
-    // OVERRIDES
+    // OVERRIDES/IMPLEMENTS
     protected function configure()
     {
       $this->bind('Test_Runner')->toInstance(Test_Runner::get());

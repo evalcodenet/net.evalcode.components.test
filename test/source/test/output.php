@@ -30,6 +30,8 @@ namespace Components;
     function leaveTest(Test_Result $result_);
 
     function appendAssertion($name_, $successful_, $message_);
+
+    function appendLine($string_='');
     //--------------------------------------------------------------------------
   }
 ?>

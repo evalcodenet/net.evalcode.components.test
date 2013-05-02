@@ -53,6 +53,36 @@ namespace Components;
 
       $this->appendLine();
       $this->appendLine();
+
+      $count=$result_->count(
+        Test_Result::TYPE_TEST, Test_Result::STATE_ALL
+      );
+
+      $failed=$result_->count(
+        Test_Result::TYPE_TEST, Test_Result::STATE_FAILED
+      );
+      $skipped=$result_->count(
+        Test_Result::TYPE_TEST, Test_Result::STATE_SKIPPED
+      );
+
+      $this->appendLine();
+
+      $this->appendLine(sprintf(' %-54.60s %s',
+        sprintf('%d Tested %d Succeeded %d Ignored %d Failed in %04.6s sec',
+          $count,
+          $count-($failed+$skipped),
+          $skipped,
+          $failed,
+          sprintf('%08.8s', sprintf('%-02.5f', round($result_->getProcessingTime(), 5)))
+        ),
+        '[INCR PEAK TIME    ] [R]'
+      ));
+
+      $this->appendLine(' INCR: Increased Memory Consumption in MB due to Test.');
+      $this->appendLine(' PEAK: Peak Memory Consumption in MB during Test.');
+      $this->appendLine(' TIME: Processing Time in Seconds of Test.');
+      $this->appendLine(' R   : (O) Succeeded (X) Failed (-) Ignored.');
+      $this->appendLine();
     }
 
     public function enterSuite(Test_Result $result_)
@@ -95,10 +125,18 @@ namespace Components;
     {
       $this->appendLine();
 
-      $processingTime=sprintf('%2.5f', $result_->getProcessingTime());
+      // FIXME (CSH) Align consumption details.
+      if($result_->profilerMemoryConsumption)
+        $consumption=$result_->profilerMemoryConsumption;
+      else
+        $consumption=str_repeat(' ', 10);
 
-      $this->append(str_repeat(' ', $this->width-($this->m_cursor+12)));
-      $this->append($processingTime);
+      $consumption.=sprintf('%07.7s', sprintf('%-.4f',
+        round($result_->getProcessingTime(), 5)
+      ));
+
+      $this->append(str_repeat(' ', $this->width-($this->m_cursor+22)));
+      $this->append($consumption);
 
       if($result_->hasState(Test_Result::STATE_SKIPPED))
         $this->append(' SKIP');
@@ -122,10 +160,19 @@ namespace Components;
 
     public function leaveTest(Test_Result $result_)
     {
-      $processingTime=sprintf('%2.5f', $result_->getProcessingTime());
+      // FIXME (CSH) Align consumption details.
+      if($result_->profilerMemoryConsumption)
+        $consumption=$result_->profilerMemoryConsumption;
+      else
+        $consumption=str_repeat(' ', 10);
 
-      $this->append(str_repeat(' ', $this->width-($this->m_cursor+12)));
-      $this->append($processingTime);
+      $consumption.=sprintf('%07.7s', sprintf('%-.4f',
+        round($result_->processingTime, 5)
+      ));
+
+      $this->m_cursor+=$result_->count(Test_Result::TYPE_ASSERTION);
+      $this->append(str_repeat(' ', $this->width-($this->m_cursor+22)));
+      $this->append($consumption);
 
       if($result_->hasState(Test_Result::STATE_SKIPPED))
         $this->append(' SKIP');
@@ -136,38 +183,73 @@ namespace Components;
 
       $this->appendLine();
 
-      if(trim($result_->output))
+      if(count($result_->profilerSplitTimeTable))
       {
-        $output=wordwrap($result_->output, $this->width-6, Io::LINE_SEPARATOR_DEFAULT, true);
-
-        $lines=explode(Io::LINE_SEPARATOR_DEFAULT, $output);
-        foreach($lines as $line)
+        $this->appendLine();
+        $this->appendLine('    + TIMES');
+        foreach($result_->profilerSplitTimeTable as $entry)
         {
-          if(trim($line))
-            $this->m_console->appendLine("    > $line");
+          $splitTimeTableEntryOutput=str_split(end($entry), $this->width-9);
+          $this->appendLine(sprintf('      %07.7s %s',
+            sprintf('%-.4f', round(reset($entry), 5)),
+            array_shift($splitTimeTableEntryOutput)
+          ));
+          foreach($splitTimeTableEntryOutput as $line)
+            $this->appendLine("       $line");
         }
       }
 
       if($result_->count(Test_Result::TYPE_ASSERTION, Test_Result::STATE_FAILED))
       {
+        $this->appendLine();
+        $this->appendLine('    + FAILED ASSERTIONS');
         foreach($result_->collect(Test_Result::TYPE_ASSERTION, Test_Result::STATE_FAILED) as $assertion)
-          $this->m_console->appendLine("    X {$assertion->output}");
+        {
+          $assertionOutput=str_split($assertion->output, $this->width-9);
+          $this->appendLine('      '.array_shift($assertionOutput));
+          foreach($assertionOutput as $line)
+            $this->appendLine("        $line");
+        }
+      }
+
+      if(trim($result_->output))
+      {
+        $output=wordwrap($result_->output, $this->width-8, Io::LINE_SEPARATOR_DEFAULT, true);
+        $lines=explode(Io::LINE_SEPARATOR_DEFAULT, $output);
+
+        $this->appendLine();
+        $this->appendLine('    + OUTPUT');
+
+        foreach($lines as $line)
+        {
+          if(trim($line))
+            $this->appendLine("      $line");
+        }
       }
     }
 
     public function appendAssertion($name_, $successful_, $message_)
     {
       if(true===$successful_)
-        $this->append('.');
+        $this->m_console->append('.');
       else
-        $this->append('x');
+        $this->m_console->append('x');
+
+      $this->m_console->flush();
+    }
+
+    public function appendLine($string_='')
+    {
+      $this->m_console->appendLine($string_);
+      $this->m_console->flush();
+      $this->m_cursor=0;
     }
     //--------------------------------------------------------------------------
 
 
     // IMPLEMENTATION
     /**
-     * @var Io_Console
+     * @var \Components\Io_Console
      */
     private $m_console;
     private $m_cursor=0;
@@ -182,13 +264,6 @@ namespace Components;
       $this->m_console->append($string_);
       $this->m_console->flush();
       $this->m_cursor+=String::length($string_);
-    }
-
-    private function appendLine($string_='')
-    {
-      $this->m_console->appendLine($string_);
-      $this->m_console->flush();
-      $this->m_cursor=0;
     }
     //--------------------------------------------------------------------------
   }

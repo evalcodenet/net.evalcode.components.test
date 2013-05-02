@@ -71,6 +71,12 @@ namespace Components;
     {
       $this->m_assertions=$assertions_;
     }
+
+    public function addAssertions(array $assertions_)
+    {
+      foreach($assertions_ as $assertion)
+        array_push($this->m_assertions, $assertion);
+    }
     //--------------------------------------------------------------------------
 
 

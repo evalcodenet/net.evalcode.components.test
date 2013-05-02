@@ -28,7 +28,7 @@ namespace Components;
     // OVERRIDES/IMPLEMENTS
     public function hashCode()
     {
-      return spl_object_hash($this);
+      return object_hash($this);
     }
 
     public function __toString()
@@ -52,7 +52,7 @@ namespace Components;
       $this->addClass(__DIR__.'/../../assertion.php');
 
       $this->addResultHandler(
-        new Test_Unit_Result_Handler($this->getBuildPath().'/test/unit')
+        new Test_Unit_Result_Handler(Io::path($this->getBuildPath())->test->unit)
       );
     }
 
