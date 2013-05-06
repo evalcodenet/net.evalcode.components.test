@@ -41,7 +41,7 @@ namespace Components;
 
   /**
    * @param mixed $value_
-   * @param int $size_
+   * @param integer $size_
    *
    * @return boolean|false If given parameter is not of type array.
    */
@@ -61,7 +61,7 @@ namespace Components;
 
   /**
    * @param mixed $value_
-   * @param int $size_
+   * @param integer $size_
    *
    * @return boolean|false If given parameter is not of type array
    *                       and given size.
@@ -87,7 +87,7 @@ namespace Components;
 
   /**
    * @param mixed $value_
-   * @param int $size_
+   * @param integer $size_
    *
    * @return boolean|false If given parameter is not of type array
    *                       or less or equal than given size.
@@ -113,7 +113,7 @@ namespace Components;
 
   /**
    * @param mixed $value_
-   * @param int $size_
+   * @param integer $size_
    *
    * @return boolean|false If given parameter is not of type array
    *                       or greater or equal than given size.

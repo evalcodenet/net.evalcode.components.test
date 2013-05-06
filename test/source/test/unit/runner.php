@@ -25,7 +25,7 @@ namespace Components;
     //--------------------------------------------------------------------------
 
 
-    // OVERRIDES/IMPLEMENTS
+    // OVERRIDES
     public function hashCode()
     {
       return object_hash($this);

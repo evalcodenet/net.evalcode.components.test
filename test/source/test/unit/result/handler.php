@@ -53,7 +53,7 @@ namespace Components;
     //--------------------------------------------------------------------------
 
 
-    // OVERRIDES/IMPLEMENTS
+    // OVERRIDES
     /**
      * @see Test_Result_Handler::handleResult()
      */

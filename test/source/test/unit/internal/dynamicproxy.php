@@ -109,7 +109,7 @@ namespace Components;
     //--------------------------------------------------------------------------
 
 
-    // ACCESSORS/MUTATORS
+    // ACCESSORS
     /**
      * @return \ReflectionClass
      */
@@ -159,7 +159,7 @@ namespace Components;
     }
 
     /**
-     * @return int
+     * @return integer
      */
     public function countTests()
     {
@@ -299,7 +299,7 @@ namespace Components;
     //--------------------------------------------------------------------------
 
 
-    // OVERRIDES/IMPLEMENTS
+    // OVERRIDES
     public function __call($key_, $args_)
     {
       if(null===($method=$this->getMethod($key_)))

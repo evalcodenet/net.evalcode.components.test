@@ -45,7 +45,7 @@ namespace Components;
     //--------------------------------------------------------------------------
 
 
-    // ACCESSORS/MUTATORS
+    // ACCESSORS
     public function run()
     {
       if(false===$this->isAttached())

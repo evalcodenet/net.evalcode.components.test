@@ -14,7 +14,7 @@ namespace Components;
    */
   class Test_Output_Null implements Test_Output
   {
-    // OVERRIDES/IMPLEMENTS
+    // OVERRIDES
     public function appendBanner()
     {
       // Do nothing ...

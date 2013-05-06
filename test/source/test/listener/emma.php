@@ -31,7 +31,7 @@ namespace Components;
     //--------------------------------------------------------------------------
 
 
-    // OVERRIDES/IMPLEMENTS
+    // OVERRIDES
     /**
      * Starts xDebug code coverage analysis on test execution, if supported.
      *

@@ -28,7 +28,7 @@ namespace Components;
     //--------------------------------------------------------------------------
 
 
-    // OVERRIDES/IMPLEMENTS
+    // OVERRIDES
     public function appendBanner()
     {
       $this->appendLine('  Unit Test Executor 0.1');

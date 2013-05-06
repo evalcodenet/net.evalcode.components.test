@@ -85,7 +85,7 @@ namespace Components;
 
 
     /**
-     * @return int
+     * @return integer
      */
     public function count()
     {
@@ -93,7 +93,7 @@ namespace Components;
     }
 
     /**
-     * @return int
+     * @return integer
      */
     public function getCapacity()
     {
@@ -103,9 +103,9 @@ namespace Components;
     /**
      * Increase capacity by given int.
      *
-     * @param int $by_
+     * @param integer $by_
      *
-     * @return int
+     * @return integer
      */
     public function increaseCapacity($by_=1)
     {
@@ -115,9 +115,9 @@ namespace Components;
     /**
      * Decrease capacity by given int.
      *
-     * @param int $by_
+     * @param integer $by_
      *
-     * @return int
+     * @return integer
      */
     public function decreaseCapacity($by_=1)
     {
@@ -135,11 +135,11 @@ namespace Components;
      */
     private $m_array=array();
     /**
-     * @var int
+     * @var integer
      */
     private $m_capacity=0;
     /**
-     * @var int
+     * @var integer
      */
     private $m_count=0;
     //-----

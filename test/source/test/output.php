@@ -16,7 +16,7 @@ namespace Components;
    */
   interface Test_Output
   {
-    // ACCESSORS/MUTATORS
+    // ACCESSORS
     function appendBanner();
     function appendSummary(Test_Result $result_);
 
