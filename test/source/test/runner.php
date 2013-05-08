@@ -12,7 +12,7 @@ namespace Components;
    *
    * @author evalcode.net
    */
-  abstract class Test_Runner implements Runtime_Error_Handler
+  abstract class Test_Runner
   {
     // PROPERTIES
     /**
@@ -73,8 +73,6 @@ namespace Components;
 
       static::registerAnnotations();
       self::$m_instance=new $type_();
-
-      Runtime::addRuntimeErrorHandler(self::$m_instance);
 
       return self::$m_instance;
     }
@@ -368,27 +366,6 @@ namespace Components;
 
 
     // OVERRIDES
-    /**
-     * (non-PHPdoc)
-     * @see Components.Runtime_Error_Handler::onError()
-     */
-    public function onError(Runtime_ErrorException $e_)
-    {
-      return false;
-    }
-
-    /**
-     * (non-PHPdoc)
-     * @see Components.Object::equals()
-     */
-    public function equals($object_)
-    {
-      if($object_ instanceof self)
-        return $this->hashCode()===$object_->hashCode();
-
-      return false;
-    }
-
     /**
      * (non-PHPdoc)
      * @see Components.Object::hashCode()
