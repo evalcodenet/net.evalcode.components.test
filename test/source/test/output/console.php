@@ -183,19 +183,44 @@ namespace Components;
 
       $this->appendLine();
 
-      if(count($result_->profilerSplitTimeTable))
+      if(trim($result_->output))
+      {
+        $output=wordwrap($result_->output, $this->width-8, Io::LINE_SEPARATOR_DEFAULT, true);
+        $lines=explode(Io::LINE_SEPARATOR_DEFAULT, $output);
+
+        $this->appendLine();
+        $this->appendLine('    + OUTPUT');
+
+        foreach($lines as $line)
+        {
+          if(trim($line))
+            $this->appendLine("      $line");
+        }
+      }
+
+      if($result_->exception)
       {
         $this->appendLine();
-        $this->appendLine('    + TIMES');
-        foreach($result_->profilerSplitTimeTable as $entry)
+        $this->appendLine('    + EXCEPTION');
+
+        $title=str_split(sprintf('%1$s in %2$s:',
+          $result_->exception->type,
+          implode(':', array($result_->exception->file, $result_->exception->line))
+        ), $this->width-9);
+        $this->appendLine('      '.array_shift($title));
+        foreach($title as $line)
+          $this->appendLine("        $line");
+
+        $message=str_split($result_->exception->message, $this->width-9);
+        $this->appendLine('      '.array_shift($message));
+        foreach($message as $line)
+          $this->appendLine("        $line");
+
+        $trace=explode(Io::LINE_SEPARATOR_DEFAULT, $result_->exception->traceAsString);
+        foreach($trace as $chunk)
         {
-          $splitTimeTableEntryOutput=str_split(end($entry), $this->width-9);
-          $this->appendLine(sprintf('      %07.7s %s',
-            sprintf('%-.4f', round(reset($entry), 5)),
-            array_shift($splitTimeTableEntryOutput)
-          ));
-          foreach($splitTimeTableEntryOutput as $line)
-            $this->appendLine("       $line");
+          foreach(str_split($chunk, $this->width-9) as $line)
+            $this->appendLine("        $line");
         }
       }
 
@@ -212,18 +237,19 @@ namespace Components;
         }
       }
 
-      if(trim($result_->output))
+      if(count($result_->profilerSplitTimeTable))
       {
-        $output=wordwrap($result_->output, $this->width-8, Io::LINE_SEPARATOR_DEFAULT, true);
-        $lines=explode(Io::LINE_SEPARATOR_DEFAULT, $output);
-
         $this->appendLine();
-        $this->appendLine('    + OUTPUT');
-
-        foreach($lines as $line)
+        $this->appendLine('    + TIMES');
+        foreach($result_->profilerSplitTimeTable as $entry)
         {
-          if(trim($line))
-            $this->appendLine("      $line");
+          $splitTimeTableEntryOutput=str_split(end($entry), $this->width-9);
+          $this->appendLine(sprintf('      %07.7s %s',
+            sprintf('%-.4f', round(reset($entry), 5)),
+            array_shift($splitTimeTableEntryOutput)
+          ));
+          foreach($splitTimeTableEntryOutput as $line)
+            $this->appendLine("       $line");
         }
       }
     }
@@ -249,7 +275,7 @@ namespace Components;
 
     // IMPLEMENTATION
     /**
-     * @var \Components\Io_Console
+     * @var Components\Io_Console
      */
     private $m_console;
     private $m_cursor=0;

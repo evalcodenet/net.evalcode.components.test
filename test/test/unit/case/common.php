@@ -16,8 +16,8 @@ namespace Components;
   {
     // TESTS
     /**
-     * @Test
-     * @Profile(fork)
+     * @test
+     * @profile(fork)
      */
     public function testAssertArray()
     {
@@ -25,8 +25,8 @@ namespace Components;
     }
 
     /**
-     * @Test(expectedFail=true)
-     * @Profile(fork)
+     * @test(expectedFail=true)
+     * @profile(fork)
      */
     public function testAssertArrayFailed()
     {
@@ -34,8 +34,8 @@ namespace Components;
     }
 
     /**
-     * @Test
-     * @Profile(fork)
+     * @test
+     * @profile(fork)
      */
     public function testAssertArrayContains()
     {
@@ -43,8 +43,8 @@ namespace Components;
     }
 
     /**
-     * @Test(expectedFail=true)
-     * @Profile(fork)
+     * @test(expectedFail=true)
+     * @profile(fork)
      */
     public function testAssertArrayContainsFailed()
     {
@@ -52,8 +52,8 @@ namespace Components;
     }
 
     /**
-     * @Test
-     * @Profile(fork)
+     * @test
+     * @profile(fork)
      */
     public function testAssertNotArrayContains()
     {
@@ -61,8 +61,8 @@ namespace Components;
     }
 
     /**
-     * @Test(expectedFail=true)
-     * @Profile(fork)
+     * @test(expectedFail=true)
+     * @profile(fork)
      */
     public function testAssertNotArrayContainsFailed()
     {
@@ -70,8 +70,8 @@ namespace Components;
     }
 
     /**
-     * @Test
-     * @Profile(fork)
+     * @test
+     * @profile(fork)
      */
     public function testAssertArraySize()
     {
@@ -79,8 +79,8 @@ namespace Components;
     }
 
     /**
-     * @Test(expectedFail=true)
-     * @Profile(fork)
+     * @test(expectedFail=true)
+     * @profile(fork)
      */
     public function testAssertArraySizeFailed()
     {
@@ -88,8 +88,8 @@ namespace Components;
     }
 
     /**
-     * @Test
-     * @Profile(fork)
+     * @test
+     * @profile(fork)
      */
     public function testAssertArraySizeGreaterThan()
     {
@@ -97,8 +97,8 @@ namespace Components;
     }
 
     /**
-     * @Test(expectedFail=true)
-     * @Profile(fork)
+     * @test(expectedFail=true)
+     * @profile(fork)
      */
     public function testAssertArraySizeGreaterThanFailed()
     {
@@ -106,8 +106,8 @@ namespace Components;
     }
 
     /**
-     * @Test
-     * @Profile(fork)
+     * @test
+     * @profile(fork)
      */
     public function testAssertArraySizeLessThan()
     {
@@ -115,8 +115,8 @@ namespace Components;
     }
 
     /**
-     * @Test(expectedFail=true)
-     * @Profile(fork)
+     * @test(expectedFail=true)
+     * @profile(fork)
      */
     public function testAssertArraySizeLessThanFailed()
     {
@@ -124,8 +124,8 @@ namespace Components;
     }
 
     /**
-     * @Test
-     * @Profile(fork)
+     * @test
+     * @profile(fork)
      */
     public function testAssertBoolean()
     {
@@ -134,8 +134,8 @@ namespace Components;
     }
 
     /**
-     * @Test(expectedFail=true)
-     * @Profile(fork)
+     * @test(expectedFail=true)
+     * @profile(fork)
      */
     public function testAssertBooleanFailed()
     {
@@ -143,8 +143,8 @@ namespace Components;
     }
 
     /**
-     * @Test
-     * @Profile(fork)
+     * @test
+     * @profile(fork)
      */
     public function testAssertNotBoolean()
     {
@@ -153,8 +153,8 @@ namespace Components;
     }
 
     /**
-     * @Test(expectedFail=true)
-     * @Profile(fork)
+     * @test(expectedFail=true)
+     * @profile(fork)
      */
     public function testAssertNotBooleanFailed()
     {
@@ -162,8 +162,8 @@ namespace Components;
     }
 
     /**
-     * @Test
-     * @Profile(fork)
+     * @test
+     * @profile(fork)
      */
     public function testAssertContains()
     {
@@ -175,8 +175,8 @@ namespace Components;
     }
 
     /**
-     * @Test(expectedFail=true)
-     * @Profile(fork)
+     * @test(expectedFail=true)
+     * @profile(fork)
      */
     public function testAssertContainsFailed()
     {
@@ -188,8 +188,8 @@ namespace Components;
     }
 
     /**
-     * @Test
-     * @Profile(fork)
+     * @test
+     * @profile(fork)
      */
     public function testAssertNotContains()
     {
@@ -201,8 +201,8 @@ namespace Components;
     }
 
     /**
-     * @Test(expectedFail=true)
-     * @Profile(fork)
+     * @test(expectedFail=true)
+     * @profile(fork)
      */
     public function testAssertNotContainsFailed()
     {
@@ -214,8 +214,8 @@ namespace Components;
     }
 
     /**
-     * @Test
-     * @Profile(fork)
+     * @test
+     * @profile(fork)
      */
     public function testAssertVisibleString()
     {
@@ -224,8 +224,8 @@ namespace Components;
     }
 
     /**
-     * @Test(expectedFail=true)
-     * @Profile(fork)
+     * @test(expectedFail=true)
+     * @profile(fork)
      */
     public function testAssertVisibleStringFailed()
     {
@@ -234,8 +234,8 @@ namespace Components;
     }
 
     /**
-     * @Test
-     * @Profile(fork)
+     * @test
+     * @profile(fork)
      */
     public function testAssertNotVisibleString()
     {
@@ -244,8 +244,8 @@ namespace Components;
     }
 
     /**
-     * @Test(expectedFail=true)
-     * @Profile(fork)
+     * @test(expectedFail=true)
+     * @profile(fork)
      */
     public function testAssertNotVisibleStringFailed()
     {
@@ -254,8 +254,8 @@ namespace Components;
     }
 
     /**
-     * @Test
-     * @Profile(fork)
+     * @test
+     * @profile(fork)
      */
     public function testAssertTrue()
     {
@@ -263,8 +263,8 @@ namespace Components;
     }
 
     /**
-     * @Test(expectedFail=true)
-     * @Profile(fork)
+     * @test(expectedFail=true)
+     * @profile(fork)
      */
     public function testAssertTrueFailed()
     {
@@ -272,8 +272,8 @@ namespace Components;
     }
 
     /**
-     * @Test
-     * @Profile(fork)
+     * @test
+     * @profile(fork)
      */
     public function testAssertNotTrue()
     {
@@ -281,8 +281,8 @@ namespace Components;
     }
 
     /**
-     * @Test(expectedFail=true)
-     * @Profile(fork)
+     * @test(expectedFail=true)
+     * @profile(fork)
      */
     public function testAssertNotTrueFailed()
     {
@@ -290,8 +290,8 @@ namespace Components;
     }
 
     /**
-     * @Test
-     * @Profile(fork)
+     * @test
+     * @profile(fork)
      */
     public function testAssertFalse()
     {
@@ -299,8 +299,8 @@ namespace Components;
     }
 
     /**
-     * @Test(expectedFail=true)
-     * @Profile(fork)
+     * @test(expectedFail=true)
+     * @profile(fork)
      */
     public function testAssertFalseFailed()
     {
@@ -308,8 +308,8 @@ namespace Components;
     }
 
     /**
-     * @Test
-     * @Profile(fork)
+     * @test
+     * @profile(fork)
      */
     public function testAssertNotFalse()
     {
@@ -317,8 +317,8 @@ namespace Components;
     }
 
     /**
-     * @Test(expectedFail=true)
-     * @Profile(fork)
+     * @test(expectedFail=true)
+     * @profile(fork)
      */
     public function testAssertNotFalseFailed()
     {
@@ -326,8 +326,8 @@ namespace Components;
     }
 
     /**
-     * @Test
-     * @Profile(fork)
+     * @test
+     * @profile(fork)
      */
     public function testAssertNull()
     {
@@ -335,8 +335,8 @@ namespace Components;
     }
 
     /**
-     * @Test(expectedFail=true)
-     * @Profile(fork)
+     * @test(expectedFail=true)
+     * @profile(fork)
      */
     public function testAssertNullFailed()
     {
@@ -344,8 +344,8 @@ namespace Components;
     }
 
     /**
-     * @Test
-     * @Profile(fork)
+     * @test
+     * @profile(fork)
      */
     public function testAssertNotNull()
     {
@@ -353,8 +353,8 @@ namespace Components;
     }
 
     /**
-     * @Test(expectedFail=true)
-     * @Profile(fork)
+     * @test(expectedFail=true)
+     * @profile(fork)
      */
     public function testAssertNotNullFailed()
     {
@@ -362,8 +362,8 @@ namespace Components;
     }
 
     /**
-     * @Test
-     * @Profile(fork)
+     * @test
+     * @profile(fork)
      */
     public function testAssertEmpty()
     {
@@ -373,8 +373,8 @@ namespace Components;
     }
 
     /**
-     * @Test(expectedFail=true)
-     * @Profile(fork)
+     * @test(expectedFail=true)
+     * @profile(fork)
      */
     public function testAssertEmptyFailed()
     {
@@ -382,8 +382,8 @@ namespace Components;
     }
 
     /**
-     * @Test
-     * @Profile(fork)
+     * @test
+     * @profile(fork)
      */
     public function testAssertNotEmpty()
     {
@@ -394,8 +394,8 @@ namespace Components;
     }
 
     /**
-     * @Test(expectedFail=true)
-     * @Profile(fork)
+     * @test(expectedFail=true)
+     * @profile(fork)
      */
     public function testAssertNotEmptyFailed()
     {
@@ -403,8 +403,8 @@ namespace Components;
     }
 
     /**
-     * @Test
-     * @Profile(fork)
+     * @test
+     * @profile(fork)
      */
     public function testAssertEquals()
     {
@@ -422,8 +422,8 @@ namespace Components;
     }
 
     /**
-     * @Test(expectedFail=true)
-     * @Profile(fork)
+     * @test(expectedFail=true)
+     * @profile(fork)
      */
     public function testAssertEqualsFailed()
     {
@@ -434,8 +434,8 @@ namespace Components;
     }
 
     /**
-     * @Test
-     * @Profile(fork)
+     * @test
+     * @profile(fork)
      */
     public function testAssertNotEquals()
     {
@@ -446,8 +446,8 @@ namespace Components;
     }
 
     /**
-     * @Test(expectedFail=true)
-     * @Profile(fork)
+     * @test(expectedFail=true)
+     * @profile(fork)
      */
     public function testAssertNotEqualsFailed()
     {
@@ -458,8 +458,8 @@ namespace Components;
     }
 
     /**
-     * @Test
-     * @Profile(fork)
+     * @test
+     * @profile(fork)
      */
     public function testAssertSame()
     {
@@ -469,8 +469,8 @@ namespace Components;
     }
 
     /**
-     * @Test(expectedFail=true)
-     * @Profile(fork)
+     * @test(expectedFail=true)
+     * @profile(fork)
      */
     public function testAssertSameFailed()
     {
@@ -487,9 +487,9 @@ namespace Components;
     }
 
     /**
-     * @Test
-     * @Profile(fork)
-     * @Ignore(ignoreCallback)
+     * @test
+     * @profile(fork)
+     * @ignore(ignoreCallback)
      */
     public function testIgnore()
     {

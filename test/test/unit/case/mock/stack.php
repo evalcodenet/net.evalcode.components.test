@@ -26,7 +26,7 @@ namespace Components;
     /**
      * @param mixed $value_
      *
-     * @return \Components\Test_Unit_Case_Mock_Stack
+     * @return Components\Test_Unit_Case_Mock_Stack
      */
     public function offer($value_=null)
     {
@@ -38,7 +38,7 @@ namespace Components;
     /**
      * @param string $value_
      *
-     * @return \Components\Test_Unit_Case_Mock_Stack
+     * @return Components\Test_Unit_Case_Mock_Stack
      */
     public function offerString($value_='')
     {
@@ -48,7 +48,7 @@ namespace Components;
     }
 
     /**
-     * @return \Components\Test_Unit_Case_Mock_Stack
+     * @return Components\Test_Unit_Case_Mock_Stack
      */
     public function take()
     {
@@ -56,7 +56,7 @@ namespace Components;
     }
 
     /**
-     * @return \Components\Test_Unit_Case_Mock_Stack
+     * @return Components\Test_Unit_Case_Mock_Stack
      */
     public function toArray()
     {
@@ -64,9 +64,9 @@ namespace Components;
     }
 
     /**
-     * @param \Components\Test_Unit_Case_Mock_Stack $stack_
+     * @param Components\Test_Unit_Case_Mock_Stack $stack_
      *
-     * @return \Components\Test_Unit_Case_Mock_Stack
+     * @return Components\Test_Unit_Case_Mock_Stack
      */
     public function append(Test_Unit_Case_Mock_Stack &$stack_)
     {
@@ -131,7 +131,7 @@ namespace Components;
 
     // IMPLEMENTATION
     /**
-     * @var \Components\Test_Unit_Case_Mock_Stack|array
+     * @var Components\Test_Unit_Case_Mock_Stack|array
      */
     private $m_array=array();
     /**

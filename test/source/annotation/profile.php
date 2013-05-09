@@ -15,7 +15,7 @@ namespace Components;
   final class Annotation_Profile extends Annotation
   {
     // PREDEFINED PROPERTIES
-    const NAME='Profile';
+    const NAME='profile';
     const TYPE=__CLASS__;
 
     /**

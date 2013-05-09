@@ -14,8 +14,8 @@ namespace Components;
    */
   final class Annotation_AfterClass extends Annotation
   {
-    // COnSTANTS
-    const NAME='AfterClass';
+    // PREDEFINED PROPERTIES
+    const NAME='afterClass';
     const TYPE=__CLASS__;
     //--------------------------------------------------------------------------
   }

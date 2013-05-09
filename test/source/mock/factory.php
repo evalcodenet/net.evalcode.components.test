@@ -71,7 +71,7 @@ namespace Components;
 
         if(false===@file_exists($fileName))
         {
-          $source=self::weaveMock($classMock, new \ReflectionClass('\\Components\\Mock'), $type);
+          $source=self::weaveMock($classMock, new \ReflectionClass('Components\\Mock'), $type);
 
           if(false===@file_put_contents($fileName, $source, 0644))
           {
@@ -84,7 +84,7 @@ namespace Components;
         require_once $fileName;
       }
 
-      $classMock="\\Components\\$classMock";
+      $classMock="Components\\$classMock";
 
       if(0<count($args_))
       {

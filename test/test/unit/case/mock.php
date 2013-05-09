@@ -16,20 +16,20 @@ namespace Components;
   {
     // TESTS
     /**
-     * @Test
-     * @Profile(fork)
-     * @Ignore(ignoreUntilFixed)
+     * @test
+     * @profile(fork)
+     * @ignore(ignoreUntilFixed)
      */
     public function mockFactory()
     {
-      $mockException=Mock_Factory::mock('\\Components\\Test_Exception',
+      $mockException=Mock_Factory::mock('Components\\Test_Exception',
         array('test/unit/case/mock', 'Mocked Exception.')
       );
 
-      $mockExceptionDefault=Mock_Factory::mock('\\Components\\Test_Exception');
+      $mockExceptionDefault=Mock_Factory::mock('Components\\Test_Exception');
 
-      $mockRunner=Mock_Factory::mock('\\Components\\Test_Runner');
-      $mockListener=Mock_Factory::mock('\\Components\\Test_Listener');
+      $mockRunner=Mock_Factory::mock('Components\\Test_Runner');
+      $mockListener=Mock_Factory::mock('Components\\Test_Listener');
 
       $mockListener->when('onInitialize')->doReturn(true);
       $mockListener->when('onExecute')->doReturn(true);
@@ -46,7 +46,7 @@ namespace Components;
       assertEquals('test/exception', $mockExceptionDefault->getNamespace());
       assertEquals('Test exception.', $mockExceptionDefault->getMessage());
 
-      $mockBindingModule=Mock_Factory::mock('\\Components\\Binding_Module');
+      $mockBindingModule=Mock_Factory::mock('Components\\Binding_Module');
 
       $mockBindingModule->when('bind')->doAnswer(
         function(Binding_Module $self_, $type_)
@@ -60,7 +60,7 @@ namespace Components;
       $mockBindingModule->when('configure')->doAnswer(
         function(Binding_Module $self_)
         {
-          $self_->bind('\\Components\\Test_Runner')->toInstance(Test_Runner::get());
+          $self_->bind('Components\\Test_Runner')->toInstance(Test_Runner::get());
 
           $self_->bind(Integer::TYPE)
             ->toInstance(22)
@@ -70,24 +70,24 @@ namespace Components;
 
       $injector=Injector::create($mockBindingModule);
 
-      assertSame(Test_Runner::get(), $injector->resolveInstance('\\Components\\Test_Runner'));
+      assertSame(Test_Runner::get(), $injector->resolveInstance('Components\\Test_Runner'));
       assertEquals(22, $injector->resolveInstance(Integer::TYPE, 'boundInteger'));
     }
 
     /**
-     * @Test
-     * @Profile(fork)
-     * @Ignore(ignoreUntilFixed)
+     * @test
+     * @profile(fork)
+     * @ignore(ignoreUntilFixed)
      */
     public function mockMethods()
     {
       // FIXME Mock inherited methods of parent class(es).
-      $queue=Mock_Factory::mock('\\Components\\Test_Unit_Case_Mock_Queue', array(100));
+      $queue=Mock_Factory::mock('Components\\Test_Unit_Case_Mock_Queue', array(100));
       $queue->when('increaseCapacity')->doNothing();
       $queue->increaseCapacity(1);
       assertEquals(100, $queue->getCapacity());
 
-      $stack=Mock_Factory::mock('\\Components\\Test_Unit_Case_Mock_Stack', array(100));
+      $stack=Mock_Factory::mock('Components\\Test_Unit_Case_Mock_Stack', array(100));
       $stack->when('increaseCapacity')->doNothing();
       $stack->increaseCapacity(1);
       assertEquals(100, $stack->getCapacity());

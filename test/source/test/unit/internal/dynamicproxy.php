@@ -129,7 +129,7 @@ namespace Components;
     }
 
     /**
-     * @return \Components\Test_Unit_Internal_DynamicProxy
+     * @return Components\Test_Unit_Internal_DynamicProxy
      */
     public function createInstance()
     {
@@ -238,7 +238,7 @@ namespace Components;
     /**
      * @param \ReflectionMethod $method_
      *
-     * @return \Components\Exception_Flat
+     * @return Components\Exception_Flat
      */
     public function getException(\ReflectionMethod $method_)
     {
@@ -251,7 +251,7 @@ namespace Components;
     /**
      * @param \ReflectionMethod $method_
      *
-     * @return \Components\Exception_Flat
+     * @return Components\Exception_Flat
      */
     public function getExpectedExceptionClass(\ReflectionMethod $method_)
     {
@@ -264,7 +264,7 @@ namespace Components;
     /**
      * @param \ReflectionMethod $method_
      *
-     * @return \Components\Test_Profiler
+     * @return Components\Test_Profiler
      */
     public function getProfilerResult(\ReflectionMethod $method_)
     {

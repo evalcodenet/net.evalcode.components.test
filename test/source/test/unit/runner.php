@@ -17,8 +17,8 @@ namespace Components;
     // CONSTRUCTION
     protected function __construct()
     {
-      $this->typeTestCase='\\Components\\Test_Unit_Case';
-      $this->typeTestSuite='\\Components\\Test_Unit_Suite';
+      $this->typeTestCase='Components\\Test_Unit_Case';
+      $this->typeTestSuite='Components\\Test_Unit_Suite';
 
       $this->includePathSchema='test/unit';
     }

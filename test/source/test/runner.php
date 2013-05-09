@@ -38,7 +38,7 @@ namespace Components;
     public $typeTestSuite;
 
     /**
-     * @var \Components\Test_Output
+     * @var Components\Test_Output
      */
     public $output;
 
@@ -53,7 +53,7 @@ namespace Components;
     /**
      * @param string $type_
      *
-     * @return \Components\Test_Runner
+     * @return Components\Test_Runner
      */
     public static function create($type_=null)
     {
@@ -78,7 +78,7 @@ namespace Components;
     }
 
     /**
-     * @return \Components\Test_Runner
+     * @return Components\Test_Runner
      */
     public static function get()
     {
@@ -125,7 +125,7 @@ namespace Components;
     /**
      * @param string $path_
      *
-     * @throws \Components\Exception_IllegalArgument
+     * @throws Components\Exception_IllegalArgument
      */
     public function addClass($path_)
     {
@@ -193,7 +193,7 @@ namespace Components;
     }
 
     /**
-     * @return \Components\Io_Path
+     * @return Components\Io_Path
      */
     public function getTempPath()
     {
@@ -227,7 +227,7 @@ namespace Components;
     /**
      * @param string $path_
      *
-     * @throws \Components\Exception_IllegalArgument
+     * @throws Components\Exception_IllegalArgument
      */
     public function setTestRootPath($path_)
     {
@@ -262,7 +262,7 @@ namespace Components;
     }
 
     /**
-     * @return \Components\Test_Result
+     * @return Components\Test_Result
      */
     public function getResult()
     {
@@ -270,7 +270,7 @@ namespace Components;
     }
 
     /**
-     * @param \Components\Test_Result $result_
+     * @param Components\Test_Result $result_
      */
     public function setResult(Test_Result $result_)
     {
@@ -278,7 +278,7 @@ namespace Components;
     }
 
     /**
-     * @return \Components\Test_Result_Handler
+     * @return Components\Test_Result_Handler
      */
     public function getResultHandlers()
     {
@@ -286,7 +286,7 @@ namespace Components;
     }
 
     /**
-     * @param \Components\Test_Result_Handler $resultHandler_
+     * @param Components\Test_Result_Handler $resultHandler_
      */
     public function addResultHandler(Test_Result_Handler $resultHandler_)
     {
@@ -294,7 +294,7 @@ namespace Components;
     }
 
     /**
-     * @param \Components\Test_Result $result_
+     * @param Components\Test_Result $result_
      */
     public function invokeResultHandler(Test_Result $result_)
     {
@@ -303,7 +303,7 @@ namespace Components;
     }
 
     /**
-     * @return \Components\Injector
+     * @return Components\Injector
      */
     public function getInjector()
     {
@@ -314,7 +314,7 @@ namespace Components;
     }
 
     /**
-     * @param \Components\Injector $injector_
+     * @param Components\Injector $injector_
      */
     public function setInjector(Injector $injector_)
     {
@@ -322,7 +322,7 @@ namespace Components;
     }
 
     /**
-     * @return \Components\Binding_Module
+     * @return Components\Binding_Module
      */
     public function getBindingModule()
     {
@@ -333,7 +333,7 @@ namespace Components;
     }
 
     /**
-     * @param \Components\Binding_Module $bindingModule_
+     * @param Components\Binding_Module $bindingModule_
      */
     public function setBindingModule(Binding_Module $bindingModule_)
     {
@@ -341,7 +341,7 @@ namespace Components;
     }
 
     /**
-     * @param \Components\Test_Listener $listener_
+     * @param Components\Test_Listener $listener_
      */
     public function addListener(Test_Listener $listener_)
     {
@@ -349,7 +349,7 @@ namespace Components;
     }
 
     /**
-     * @param \Components\Test_Listener $listener_
+     * @param Components\Test_Listener $listener_
      */
     public function removeListener(Test_Listener $listener_)
     {
@@ -393,7 +393,7 @@ namespace Components;
     protected static $m_annotationsRegistered=false;
 
     /**
-     * @var \Components\Test_Runner
+     * @var Components\Test_Runner
      */
     private static $m_instance;
 
@@ -402,7 +402,7 @@ namespace Components;
      */
     protected $m_listeners=array();
     /**
-     * @var array|\Components\Test_Result_Handler
+     * @var array|Components\Test_Result_Handler
      */
     protected $m_resultHandlers=array();
     /**
@@ -418,11 +418,11 @@ namespace Components;
      */
     protected $m_testPaths=array();
     /**
-     * @var \Components\Binding_Module
+     * @var Components\Binding_Module
      */
     protected $m_bindingModule;
     /**
-     * @var \Components\Injector
+     * @var Components\Injector
      */
     protected $m_injector;
     /**
@@ -430,7 +430,7 @@ namespace Components;
      */
     protected $m_buildPath;
     /**
-     * @var \Components\Test_Result
+     * @var Components\Test_Result
      */
     protected $m_result;
     /**

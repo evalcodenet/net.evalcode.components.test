@@ -35,7 +35,7 @@ namespace Components;
     /**
      * Starts xDebug code coverage analysis on test execution, if supported.
      *
-     * @param \Components\Test_Result $runner_
+     * @param Components\Test_Result $runner_
      *
      * @see Components.Test_Listener::onExecute()
      */

@@ -15,7 +15,7 @@ namespace Components;
   final class Annotation_AfterMethod extends Annotation
   {
     // PREDEFINED PROPERTIES
-    const NAME='AfterMethod';
+    const NAME='afterMethod';
     const TYPE=__CLASS__;
     //--------------------------------------------------------------------------
   }
