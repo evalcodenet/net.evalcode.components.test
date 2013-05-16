@@ -53,7 +53,7 @@ namespace Components;
     /**
      * @param string $type_
      *
-     * @return Components\Test_Runner
+     * @return \Components\Test_Runner
      */
     public static function create($type_=null)
     {
@@ -78,7 +78,7 @@ namespace Components;
     }
 
     /**
-     * @return Components\Test_Runner
+     * @return \Components\Test_Runner
      */
     public static function get()
     {
@@ -125,7 +125,7 @@ namespace Components;
     /**
      * @param string $path_
      *
-     * @throws Components\Exception_IllegalArgument
+     * @throws \Components\Exception_IllegalArgument
      */
     public function addClass($path_)
     {
@@ -193,7 +193,7 @@ namespace Components;
     }
 
     /**
-     * @return Components\Io_Path
+     * @return \Components\Io_Path
      */
     public function getTempPath()
     {
@@ -227,7 +227,7 @@ namespace Components;
     /**
      * @param string $path_
      *
-     * @throws Components\Exception_IllegalArgument
+     * @throws \Components\Exception_IllegalArgument
      */
     public function setTestRootPath($path_)
     {
@@ -262,7 +262,7 @@ namespace Components;
     }
 
     /**
-     * @return Components\Test_Result
+     * @return \Components\Test_Result
      */
     public function getResult()
     {
@@ -270,7 +270,7 @@ namespace Components;
     }
 
     /**
-     * @param Components\Test_Result $result_
+     * @param \Components\Test_Result $result_
      */
     public function setResult(Test_Result $result_)
     {
@@ -278,7 +278,7 @@ namespace Components;
     }
 
     /**
-     * @return Components\Test_Result_Handler
+     * @return \Components\Test_Result_Handler
      */
     public function getResultHandlers()
     {
@@ -286,7 +286,7 @@ namespace Components;
     }
 
     /**
-     * @param Components\Test_Result_Handler $resultHandler_
+     * @param \Components\Test_Result_Handler $resultHandler_
      */
     public function addResultHandler(Test_Result_Handler $resultHandler_)
     {
@@ -294,7 +294,7 @@ namespace Components;
     }
 
     /**
-     * @param Components\Test_Result $result_
+     * @param \Components\Test_Result $result_
      */
     public function invokeResultHandler(Test_Result $result_)
     {
@@ -303,7 +303,7 @@ namespace Components;
     }
 
     /**
-     * @return Components\Injector
+     * @return \Components\Injector
      */
     public function getInjector()
     {
@@ -314,7 +314,7 @@ namespace Components;
     }
 
     /**
-     * @param Components\Injector $injector_
+     * @param \Components\Injector $injector_
      */
     public function setInjector(Injector $injector_)
     {
@@ -322,7 +322,7 @@ namespace Components;
     }
 
     /**
-     * @return Components\Binding_Module
+     * @return \Components\Binding_Module
      */
     public function getBindingModule()
     {
@@ -333,7 +333,7 @@ namespace Components;
     }
 
     /**
-     * @param Components\Binding_Module $bindingModule_
+     * @param \Components\Binding_Module $bindingModule_
      */
     public function setBindingModule(Binding_Module $bindingModule_)
     {
@@ -341,7 +341,7 @@ namespace Components;
     }
 
     /**
-     * @param Components\Test_Listener $listener_
+     * @param \Components\Test_Listener $listener_
      */
     public function addListener(Test_Listener $listener_)
     {
@@ -349,7 +349,7 @@ namespace Components;
     }
 
     /**
-     * @param Components\Test_Listener $listener_
+     * @param \Components\Test_Listener $listener_
      */
     public function removeListener(Test_Listener $listener_)
     {
@@ -368,7 +368,7 @@ namespace Components;
     // OVERRIDES
     /**
      * (non-PHPdoc)
-     * @see Components.Object::hashCode()
+     * @see Components\Object::hashCode()
      */
     public function hashCode()
     {
@@ -377,7 +377,7 @@ namespace Components;
 
     /**
      * (non-PHPdoc)
-     * @see Components.Object::__toString()
+     * @see Components\Object::__toString()
      */
     public function __toString()
     {

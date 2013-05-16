@@ -16,9 +16,9 @@ namespace Components;
   {
     /**
      * (non-PHPdoc)
-     * @see Components.Debug_Profiler::profileCallForked()
+     * @see Components\Debug_Profiler::profileCallForked()
      *
-     * @return Components\Test_Profiler
+     * @return \Components\Test_Profiler
      */
     public static function profileCallForked(array $callable_, array $args_=array())
     {

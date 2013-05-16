@@ -35,9 +35,9 @@ namespace Components;
     /**
      * Starts xDebug code coverage analysis on test execution, if supported.
      *
-     * @param Components\Test_Result $runner_
+     * @param \Components\Test_Result $runner_
      *
-     * @see Components.Test_Listener::onExecute()
+     * @see Components\Test_Listener::onExecute()
      */
     public function onExecute(Test_Runner $runner_)
     {
@@ -61,7 +61,7 @@ namespace Components;
      *
      * @param Test_Runner $runner_
      *
-     * @see Components.Test_Listener::onTerminate()
+     * @see Components\Test_Listener::onTerminate()
      */
     public function onTerminate(Test_Runner $runner_)
     {
@@ -84,7 +84,7 @@ namespace Components;
     /**
      * @param Test_Runner $runner_
      *
-     * @see Components.Test_Listener::onInitialize()
+     * @see Components\Test_Listener::onInitialize()
      */
     public function onInitialize(Test_Runner $runner_)
     {
@@ -93,7 +93,7 @@ namespace Components;
 
     /**
      * (non-PHPdoc)
-     * @see Components.Object::hashCode()
+     * @see Components\Object::hashCode()
      */
     public function hashCode()
     {
@@ -102,7 +102,7 @@ namespace Components;
 
     /**
      * (non-PHPdoc)
-     * @see Components.Object::equals()
+     * @see Components\Object::equals()
      */
     public function equals($object_)
     {
@@ -114,7 +114,7 @@ namespace Components;
 
     /**
      * (non-PHPdoc)
-     * @see Components.Object::__toString()
+     * @see Components\Object::__toString()
      */
     public function __toString()
     {

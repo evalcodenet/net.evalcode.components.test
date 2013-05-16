@@ -16,7 +16,7 @@ namespace Components;
   {
     // STATIC ACCESSORS
     /**
-     * @return Components\Test_Cli
+     * @return \Components\Test_Cli
      */
     public static function get()
     {

@@ -22,15 +22,15 @@ namespace Components;
 
     // ACCESSORS
     /**
-     * @param Components\Test_Runner $runner_
+     * @param \Components\Test_Runner $runner_
      */
     function onInitialize(Test_Runner $runner_);
     /**
-     * @param Components\Test_Runner $runner_
+     * @param \Components\Test_Runner $runner_
      */
     function onExecute(Test_Runner $runner_);
     /**
-     * @param Components\Test_Runner $runner_
+     * @param \Components\Test_Runner $runner_
      */
     function onTerminate(Test_Runner $runner_);
     //--------------------------------------------------------------------------
