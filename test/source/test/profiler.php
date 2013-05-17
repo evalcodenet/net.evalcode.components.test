@@ -107,7 +107,7 @@ namespace Components;
 
       echo $shm->get(1);
 
-      Assertion_Context::current()->addAssertions($shm->get(2));
+      Assertion_Context::current()->addAssertions((array)$shm->get(2));
 
       $profiler=new static();
       $profiler->m_profiling=false;
