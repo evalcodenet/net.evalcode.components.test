@@ -224,7 +224,7 @@ namespace Components;
 
     protected function createReportPath()
     {
-      Io::createDirectory($this->m_reportPath);
+      Io::directoryCreate($this->m_reportPath);
 
       return @realpath($this->m_reportPath);
     }
