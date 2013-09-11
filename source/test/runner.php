@@ -449,7 +449,7 @@ namespace Components;
 
     protected function discoverTestPaths($path_)
     {
-      if(is_file($path_.'/.manifest'))
+      if(is_file("$path_/.manifest"))
       {
         try
         {
@@ -471,8 +471,8 @@ namespace Components;
 
       foreach($iterator as $entry)
       {
-        if($entry->isDir())
-          $this->discoverTestPaths($entry->getPathname());
+        if($entry->isDir() && 0!==strpos($entry->getBasename(), '.'))
+          $this->discoverTestPaths($entry->getRealpath());
       }
     }
 
