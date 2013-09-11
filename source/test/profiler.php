@@ -14,9 +14,7 @@ namespace Components;
    */
   class Test_Profiler extends Debug_Profiler
   {
-    /**
-     * (non-PHPdoc)
-     * @see Components\Debug_Profiler::profileCallForked()
+    /**     * @see Components\Debug_Profiler::profileCallForked() Components\Debug_Profiler::profileCallForked()
      *
      * @return \Components\Test_Profiler
      */

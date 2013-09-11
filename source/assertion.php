@@ -853,7 +853,7 @@ namespace Components;
   /**
    * Alias for assertEquals.
    *
-   * @see assertEquals
+   * @see assertEquals assertEquals
    */
   function assertEqual($expectedValue_, $actualValue_)
   {
@@ -886,7 +886,7 @@ namespace Components;
   /**
    * Alias for assertNotEquals.
    *
-   * @see assertNotEquals
+   * @see assertNotEquals assertNotEquals
    */
   function assertNotEqual($expectedValue_, $actualValue_)
   {

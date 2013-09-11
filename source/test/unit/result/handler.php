@@ -55,7 +55,7 @@ namespace Components;
 
     // OVERRIDES
     /**
-     * @see Test_Result_Handler::handleResult()
+     * @see Test_Result_Handler::handleResult() Test_Result_Handler::handleResult()
      */
     public function handleResult(Test_Result $result_)
     {

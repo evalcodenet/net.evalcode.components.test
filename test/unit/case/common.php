@@ -517,7 +517,7 @@ namespace Components;
      * Return an explaining string for the user to allow him to fix the
      * problem and activate annotated test method.
      *
-     * @see Unit_Case_Common::testIgnore()
+     * @see Unit_Case_Common::testIgnore() Unit_Case_Common::testIgnore()
      *
      * @return string|boolean
      */
