@@ -7,8 +7,9 @@ namespace Components;
   /**
    * Annotation_Profile
    *
-   * @package net.evalcode.components
-   * @subpackage test.annotation
+   * @api
+   * @package net.evalcode.components.test
+   * @subpackage annotation
    *
    * @author evalcode.net
    */
@@ -17,7 +18,6 @@ namespace Components;
     // PREDEFINED PROPERTIES
     const NAME='profile';
     const TYPE=__CLASS__;
-
     /**
      * @var string Expected value to enable forked profiling.
      */

@@ -7,8 +7,8 @@ namespace Components;
   /**
    * Test_Output_Null
    *
-   * @package net.evalcode.components
-   * @subpackage test.output
+   * @package net.evalcode.components.test
+   * @subpackage output
    *
    * @author evalcode.net
    */

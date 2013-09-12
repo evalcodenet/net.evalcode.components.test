@@ -10,8 +10,8 @@ namespace Components;
    * Implementation: Lifecycle Listener to integrate
    * Emma code coverage report generation.
    *
-   * @package net.evalcode.components
-   * @subpackage test.listener
+   * @package net.evalcode.components.test
+   * @subpackage listener
    *
    * @author evalcode.net
    */
@@ -37,7 +37,7 @@ namespace Components;
      *
      * @param \Components\Test_Result $runner_
      *
-     * @see Components\Test_Listener::onExecute() Components\Test_Listener::onExecute()
+     * @see \Components\Test_Listener::onExecute() \Components\Test_Listener::onExecute()
      */
     public function onExecute(Test_Runner $runner_)
     {
@@ -59,9 +59,9 @@ namespace Components;
      * Invokes EMMA code coverage report generation if
      * xDebug code coverage analysis results are available.
      *
-     * @param Test_Runner $runner_
+     * @param \Components\Test_Runner $runner_
      *
-     * @see Components\Test_Listener::onTerminate() Components\Test_Listener::onTerminate()
+     * @see \Components\Test_Listener::onTerminate() \Components\Test_Listener::onTerminate()
      */
     public function onTerminate(Test_Runner $runner_)
     {
@@ -82,23 +82,25 @@ namespace Components;
     }
 
     /**
-     * @param Test_Runner $runner_
+     * @param \Components\Test_Runner $runner_
      *
-     * @see Components\Test_Listener::onInitialize() Components\Test_Listener::onInitialize()
+     * @see \Components\Test_Listener::onInitialize() \Components\Test_Listener::onInitialize()
      */
     public function onInitialize(Test_Runner $runner_)
     {
       // Do nothing ...
     }
 
-    /**     * @see Components\Object::hashCode() Components\Object::hashCode()
+    /**
+     * @see \Components\Object::hashCode() \Components\Object::hashCode()
      */
     public function hashCode()
     {
       return object_hash($this);
     }
 
-    /**     * @see Components\Object::equals() Components\Object::equals()
+    /**
+     * @see \Components\Object::equals() \Components\Object::equals()
      */
     public function equals($object_)
     {
@@ -108,7 +110,8 @@ namespace Components;
       return false;
     }
 
-    /**     * @see Components\Object::__toString() Components\Object::__toString()
+    /**
+     * @see \Components\Object::__toString() \Components\Object::__toString()
      */
     public function __toString()
     {

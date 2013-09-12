@@ -7,8 +7,8 @@ namespace Components;
   /**
    * Mock_Factory
    *
-   * @package net.evalcode.components
-   * @subpackage test.mock
+   * @package net.evalcode.components.test
+   * @subpackage mock
    *
    * @author evalcode.net
    */
@@ -16,7 +16,7 @@ namespace Components;
   {
     // STATIC ACCESSORS
     /**
-     * @return Mock
+     * @return \Components\Mock
      */
     public static function mock($type_, array $args_=array())
     {
@@ -49,7 +49,7 @@ namespace Components;
 
 
     /**
-     * @return Mock
+     * @return \Components\Mock
      */
     // FIXME (CSH) Support namespaces correctly.
     protected static function mockImpl($type_, array $args_=array())

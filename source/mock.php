@@ -7,8 +7,8 @@ namespace Components;
   /**
    * Mock
    *
-   * @package net.evalcode.components
-   * @subpackage test
+   * @api
+   * @package net.evalcode.components.test
    *
    * @author evalcode.net
    */
@@ -80,7 +80,7 @@ namespace Components;
 
     // IMPLEMENTATION
     /**
-     * @var Mock_Stub|array
+     * @var \Components\Mock_Stub[]
      */
     private $m_stubs=array();
     //-----

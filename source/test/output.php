@@ -7,12 +7,9 @@ namespace Components;
   /**
    * Test_Output
    *
-   * @package net.evalcode.components
-   * @subpackage test
+   * @package net.evalcode.components.test
    *
    * @author evalcode.net
-   * @copyright Copyright (C); 2012 evalcode.net
-   * @license GNU General License 3
    */
   interface Test_Output
   {

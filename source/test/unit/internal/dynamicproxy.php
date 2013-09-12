@@ -7,8 +7,8 @@ namespace Components;
   /**
    * Test_Unit_Internal_DynamicProxy
    *
-   * @package net.evalcode.components
-   * @subpackage test.unit.internal
+   * @package net.evalcode.components.test
+   * @subpackage unit.internal
    *
    * @author evalcode.net
    */
@@ -151,7 +151,7 @@ namespace Components;
     }
 
     /**
-     * @return array|\ReflectionMethod
+     * @return \ReflectionMethod[]
      */
     public function getTests()
     {

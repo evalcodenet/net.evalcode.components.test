@@ -7,8 +7,9 @@ namespace Components;
   /**
    * Assertion_Error
    *
-   * @package net.evalcode.components
-   * @subpackage test.assertion
+   * @api
+   * @package net.evalcode.components.test
+   * @subpackage assertion
    *
    * @author evalcode.net
    */

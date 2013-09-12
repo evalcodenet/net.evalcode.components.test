@@ -7,8 +7,7 @@ namespace Components;
   /**
    * Test_Runner
    *
-   * @package net.evalcode.components
-   * @subpackage test
+   * @package net.evalcode.components.test
    *
    * @author evalcode.net
    */
@@ -27,7 +26,6 @@ namespace Components;
      * @var string
      */
     public $configuration;
-
     /**
      * @var string
      */
@@ -36,14 +34,12 @@ namespace Components;
      * @var string
      */
     public $typeTestSuite;
-
     /**
-     * @var Components\Test_Output
+     * @var \Components\Test_Output
      */
     public $output;
-
     /**
-     * @var array|string
+     * @var string[]
      */
     public static $fileExtensionsPhp=array('php', 'phps');
     //--------------------------------------------------------------------------
@@ -255,7 +251,7 @@ namespace Components;
     }
 
     /**
-     * @return array|string
+     * @return string[]
      */
     public function getTestPaths()
     {
@@ -367,14 +363,16 @@ namespace Components;
 
 
     // OVERRIDES
-    /**     * @see Components\Object::hashCode() Components\Object::hashCode()
+    /**
+     * @see \Components\Object::hashCode() \Components\Object::hashCode()
      */
     public function hashCode()
     {
       return object_hash($this);
     }
 
-    /**     * @see Components\Object::__toString() Components\Object::__toString()
+    /**
+     * @see \Components\Object::__toString() \Components\Object::__toString()
      */
     public function __toString()
     {
@@ -388,38 +386,36 @@ namespace Components;
      * @var boolean
      */
     protected static $m_annotationsRegistered=false;
-
     /**
-     * @var Components\Test_Runner
+     * @var \Components\Test_Runner
      */
     private static $m_instance;
-
     /**
-     * @var array|Test_Listener
+     * @var \Components\Test_Listener[]
      */
     protected $m_listeners=array();
     /**
-     * @var array|Components\Test_Result_Handler
+     * @var \Components\Test_Result_Handler[]
      */
     protected $m_resultHandlers=array();
     /**
-     * @var array|string
+     * @var string[]
      */
     protected $m_suites=array();
     /**
-     * @var array|string
+     * @var string[]
      */
     protected $m_suitesAdded=array();
     /**
-     * @var array|string
+     * @var string[]
      */
     protected $m_testPaths=array();
     /**
-     * @var Components\Binding_Module
+     * @var \Components\Binding_Module
      */
     protected $m_bindingModule;
     /**
-     * @var Components\Injector
+     * @var \Components\Injector
      */
     protected $m_injector;
     /**
@@ -427,7 +423,7 @@ namespace Components;
      */
     protected $m_buildPath;
     /**
-     * @var Components\Test_Result
+     * @var \Components\Test_Result
      */
     protected $m_result;
     /**

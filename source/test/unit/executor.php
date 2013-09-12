@@ -7,8 +7,8 @@ namespace Components;
   /**
    * Test_Unit_Executor
    *
-   * @package net.evalcode.components
-   * @subpackage test.unit
+   * @package net.evalcode.components.test
+   * @subpackage unit
    *
    * @author evalcode.net
    */
@@ -75,15 +75,15 @@ namespace Components;
 
     // IMPLEMENTATION
     /**
-     * @var Test_Unit_Internal_DynamicProxy|array
+     * @var \Components\Test_Unit_Internal_DynamicProxy[]
      */
     protected $m_cases=array();
     /**
-     * @var Test_Unit_Internal_DynamicProxy
+     * @var \Components\Test_Unit_Internal_DynamicProxy
      */
     protected $m_suite;
     /**
-     * @var Test_Unit_Runner
+     * @var \Components\Test_Unit_Runner
      */
     protected $m_runner;
     //-----

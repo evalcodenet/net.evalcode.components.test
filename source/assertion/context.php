@@ -7,8 +7,8 @@ namespace Components;
   /**
    * Assertion_Context
    *
-   * @package net.evalcode.components
-   * @subpackage test.assertion
+   * @package net.evalcode.components.test
+   * @subpackage assertion
    *
    * @author evalcode.net
    */
@@ -82,7 +82,7 @@ namespace Components;
 
     // IMPLEMENTATION
     /**
-     * @var Assertion_Context|array
+     * @var \Components\Assertion_Context[]
      */
     private static $m_instances=array();
 
