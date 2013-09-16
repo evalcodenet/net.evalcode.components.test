@@ -73,17 +73,17 @@ namespace Components;
       $test=Test_Unit_Runner::create();
       $test->output=new Test_Output_Console($this);
 
-      if($this->hasArgument('build'))
-        $test->setBuildPath($this->getArgument('build'));
+      if($this->hasArgument('config'))
+        $test->configuration=$this->getArgument('config');
       if($this->hasArgument('exclude'))
         $test->excludePattern=$this->getArgument('exclude');
       if($this->hasArgument('include'))
         $test->includePattern=$this->getArgument('include');
+
       if($this->hasArgument('path'))
         $test->setTestRootPath($this->getArgument('path'));
-
-      if($this->hasArgument('config'))
-        $test->configuration=$configuration;
+      if($this->hasArgument('build'))
+        $test->setBuildPath($this->getArgument('build'));
 
       if($this->hasArgument('analyzers'))
       {
