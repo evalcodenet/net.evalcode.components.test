@@ -7,7 +7,7 @@ namespace Components;
   /**
    * Test_Unit_Case_Mock
    *
-   * @package net.evalcode.components
+   * @package net.evalcode.components.test
    * @subpackage test.unit.case
    *
    * @author evalcode.net

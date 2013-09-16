@@ -7,7 +7,7 @@ namespace Components;
   /**
    * Test_Unit_Case_Mock_Stack
    *
-   * @package net.evalcode.components
+   * @package net.evalcode.components.test
    * @subpackage test.unit.case.mock
    *
    * @author evalcode.net
@@ -83,7 +83,6 @@ namespace Components;
       return $this;
     }
 
-
     /**
      * @return integer
      */
@@ -131,7 +130,7 @@ namespace Components;
 
     // IMPLEMENTATION
     /**
-     * @var Components\Test_Unit_Case_Mock_Stack|array
+     * @var \Components\Test_Unit_Case_Mock_Stack|array
      */
     private $m_array=array();
     /**

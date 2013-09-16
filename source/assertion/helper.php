@@ -7,8 +7,8 @@ namespace Components;
   /**
    * Assertion_Helper
    *
-   * @package net.evalcode.components
-   * @subpackage test.assertion
+   * @package net.evalcode.components.test
+   * @subpackage assertion
    *
    * @author evalcode.net
    */

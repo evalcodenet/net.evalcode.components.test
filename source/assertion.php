@@ -7,8 +7,8 @@ namespace Components;
   /**
    * Assertion
    *
-   * @package net.evalcode.components
-   * @subpackage test
+   * @api
+   * @package net.evalcode.components.test
    *
    * @author evalcode.net
    */
@@ -28,7 +28,7 @@ namespace Components;
    *
    * Assertions.
    *
-   * @package net.evalcode.components
+   * @package net.evalcode.components.test
    * @subpackage test
    *
    * @author evalcode.net
@@ -853,7 +853,7 @@ namespace Components;
   /**
    * Alias for assertEquals.
    *
-   * @see assertEquals
+   * @see assertEquals assertEquals
    */
   function assertEqual($expectedValue_, $actualValue_)
   {
@@ -886,7 +886,7 @@ namespace Components;
   /**
    * Alias for assertNotEquals.
    *
-   * @see assertNotEquals
+   * @see assertNotEquals assertNotEquals
    */
   function assertNotEqual($expectedValue_, $actualValue_)
   {

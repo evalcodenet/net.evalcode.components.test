@@ -7,8 +7,8 @@ namespace Components;
   /**
    * Mock_Stub
    *
-   * @package net.evalcode.components
-   * @subpackage test.mock
+   * @package net.evalcode.components.test
+   * @subpackage mock
    *
    * @author evalcode.net
    */

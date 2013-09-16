@@ -7,7 +7,7 @@ namespace Components;
   /**
    * Test_Unit_Case_Common
    *
-   * @package net.evalcode.components
+   * @package net.evalcode.components.test
    * @subpackage test.unit.case
    *
    * @author evalcode.net
@@ -517,7 +517,7 @@ namespace Components;
      * Return an explaining string for the user to allow him to fix the
      * problem and activate annotated test method.
      *
-     * @see Unit_Case_Common::testIgnore()
+     * @see Unit_Case_Common::testIgnore() Unit_Case_Common::testIgnore()
      *
      * @return string|boolean
      */

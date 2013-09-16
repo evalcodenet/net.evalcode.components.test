@@ -7,8 +7,8 @@ namespace Components;
   /**
    * Test_Unit_Runner
    *
-   * @package net.evalcode.components
-   * @subpackage test.unit
+   * @package net.evalcode.components.test
+   * @subpackage unit
    *
    * @author evalcode.net
    */

@@ -7,8 +7,9 @@ namespace Components;
   /**
    * Annotation_AfterMethod
    *
-   * @package net.evalcode.components
-   * @subpackage test.annotation
+   * @api
+   * @package net.evalcode.components.test
+   * @subpackage annotation
    *
    * @author evalcode.net
    */

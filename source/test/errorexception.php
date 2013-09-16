@@ -7,8 +7,7 @@ namespace Components;
   /**
    * Test_ErrorException
    *
-   * @package net.evalcode.components
-   * @subpackage test
+   * @package net.evalcode.components.test
    *
    * @author evalcode.net
    */

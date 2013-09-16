@@ -7,8 +7,8 @@ namespace Components;
   /**
    * Test_Result_Handler
    *
-   * @package net.evalcode.components
-   * @subpackage test.result
+   * @package net.evalcode.components.test
+   * @subpackage result
    *
    * @author evalcode.net
    */
@@ -18,7 +18,7 @@ namespace Components;
     /**
      * Result modification callback.
      *
-     * @param Test_Result $result_
+     * @param \Components\Test_Result $result_
      */
     function handleResult(Test_Result $result_);
     //--------------------------------------------------------------------------

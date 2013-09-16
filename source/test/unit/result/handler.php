@@ -7,8 +7,8 @@ namespace Components;
   /**
    * Test_Unit_Result_Handler
    *
-   * @package net.evalcode.components
-   * @subpackage test.unit.result
+   * @package net.evalcode.components.test
+   * @subpackage unit.result
    *
    * @author evalcode.net
    */
@@ -55,37 +55,26 @@ namespace Components;
 
     // OVERRIDES
     /**
-     * @see Test_Result_Handler::handleResult()
+     * @see Test_Result_Handler::handleResult() Test_Result_Handler::handleResult()
      */
     public function handleResult(Test_Result $result_)
     {
-      if(false===($reportPath=$this->createReportPath()))
-      {
-        throw new Exception_IllegalArgument('test/unit/result/handler', sprintf(
-          'Unable to create report path [path: %1$s].', $this->m_reportPath
-        ));
-      }
+      $reportPath=$this->createReportPath();
 
       foreach($result_->collect(Test_Result::TYPE_CASE) as $result)
       {
-        if(false===($reportFile=$this->createReportFile($reportPath, $result)))
-        {
-          throw new Exception_IllegalArgument('test/unit/result/handler', sprintf(
-            'Unable to create report file [path: %1$s, report: %2%s].',
-              $this->m_reportPath, $result->name
-          ));
-        }
-
-        $this->writeReport($result, $reportFile);
+        $this->writeReport($result,
+          $this->createReportFile($reportPath, $result)
+        );
       }
     }
     //--------------------------------------------------------------------------
 
 
     // IMPLEMENTATION
-    protected $m_reportPath;
     protected $m_reportFileNamePrefix;
     protected $m_reportFileNameSuffix;
+    protected $m_reportPath;
     //-----
 
 
@@ -189,8 +178,8 @@ namespace Components;
       $element->setAttribute(self::XML_ATTRIBUTE_NAME_TYPE, $resultTest_->exception->type);
       $element->setAttribute(self::XML_ATTRIBUTE_NAME_MESSAGE, $resultTest_->exception->message);
 
-      $element->appendChild($document_->createCDATASection(
-        sprintf('%2$s%1$s%3$s:%4$s%1$s%5$s',
+      $element->appendChild($document_->createCDATASection(sprintf(
+        '%2$s%1$s%3$s:%4$s%1$s%5$s',
           Io::LINE_SEPARATOR_DEFAULT,
           $resultTest_->exception->message,
           $resultTest_->exception->file,
@@ -224,9 +213,14 @@ namespace Components;
 
     protected function createReportPath()
     {
-      Io::directoryCreate($this->m_reportPath);
+      if(false===Io::directoryCreate($this->m_reportPath))
+      {
+        throw new Exception_IllegalArgument('test/unit/result/handler', sprintf(
+          'Unable to create report path [path: %1$s].', $this->m_reportPath
+        ));
+      }
 
-      return @realpath($this->m_reportPath);
+      return $this->m_reportPath;
     }
 
     protected function createReportFile($reportPath_, Test_Result $resultCase_)
@@ -244,10 +238,16 @@ namespace Components;
       $reportFilePath=$reportPath_.Io::DIRECTORY_SEPARATOR.$reportFileName;
 
       // TODO Io_File::create()
-      if(false===@touch($reportFilePath))
-        return false;
+      if(false===touch($reportFilePath))
+      {
+        throw new Exception_IllegalArgument('test/unit/result/handler', sprintf(
+          'Unable to create report file [path: %1$s, report: %2%s].',
+            $this->m_reportPath,
+            $resultCase_->name
+        ));
+      }
 
-      return @realpath($reportFilePath);
+      return $reportFilePath;
     }
     //--------------------------------------------------------------------------
   }

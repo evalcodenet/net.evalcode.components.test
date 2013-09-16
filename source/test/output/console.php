@@ -7,8 +7,8 @@ namespace Components;
   /**
    * Test_Output_Console
    *
-   * @package net.evalcode.components
-   * @subpackage test.output
+   * @package net.evalcode.components.test
+   * @subpackage output
    *
    * @author evalcode.net
    */
@@ -275,7 +275,7 @@ namespace Components;
 
     // IMPLEMENTATION
     /**
-     * @var Components\Io_Console
+     * @var \Components\Io_Console
      */
     private $m_console;
     private $m_cursor=0;

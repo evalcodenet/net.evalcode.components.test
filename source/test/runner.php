@@ -7,8 +7,7 @@ namespace Components;
   /**
    * Test_Runner
    *
-   * @package net.evalcode.components
-   * @subpackage test
+   * @package net.evalcode.components.test
    *
    * @author evalcode.net
    */
@@ -27,7 +26,6 @@ namespace Components;
      * @var string
      */
     public $configuration;
-
     /**
      * @var string
      */
@@ -36,14 +34,12 @@ namespace Components;
      * @var string
      */
     public $typeTestSuite;
-
     /**
-     * @var Components\Test_Output
+     * @var \Components\Test_Output
      */
     public $output;
-
     /**
-     * @var array|string
+     * @var string[]
      */
     public static $fileExtensionsPhp=array('php', 'phps');
     //--------------------------------------------------------------------------
@@ -96,10 +92,17 @@ namespace Components;
       if(null!==$this->configuration)
         include_once $this->configuration;
 
-      if(null===$this->m_buildPath)
-        throw new Exception_IllegalState('test/runner', 'Build path must be specified.');
-      if(null===$this->m_testRootPath)
-        throw new Exception_IllegalState('test/runner', 'Test root path must be specified.');
+      if(null!==$this->m_buildPath)
+        $this->m_buildPath=realpath($this->m_buildPath);
+
+      if(!Io::directoryCreate($this->m_buildPath))
+        throw new Exception_IllegalState('test/runner', 'Missing/invalid build path parameter.');
+
+      if(null!==$this->m_testRootPath)
+        $this->m_testRootPath=realpath($this->m_testRootPath);
+
+      if(!Io::directoryCreate($this->m_testRootPath))
+        throw new Exception_IllegalState('test/runner', 'Missing/invalid test root path.');
 
       if(null===$this->output)
         $this->output=new Test_Output_Null();
@@ -111,7 +114,8 @@ namespace Components;
       $this->initialize();
       $this->discoverTests($this->m_testRootPath);
 
-      $tmp=$this->getTempPath()->create();
+      $tmp=$this->getTempPath();
+      $tmp->create();
 
       $this->invokeListeners(Test_Listener::EXECUTION);
       $this->execute();
@@ -254,7 +258,7 @@ namespace Components;
     }
 
     /**
-     * @return array|string
+     * @return string[]
      */
     public function getTestPaths()
     {
@@ -367,8 +371,7 @@ namespace Components;
 
     // OVERRIDES
     /**
-     * (non-PHPdoc)
-     * @see Components\Object::hashCode()
+     * @see \Components\Object::hashCode() \Components\Object::hashCode()
      */
     public function hashCode()
     {
@@ -376,8 +379,7 @@ namespace Components;
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Components\Object::__toString()
+     * @see \Components\Object::__toString() \Components\Object::__toString()
      */
     public function __toString()
     {
@@ -391,38 +393,36 @@ namespace Components;
      * @var boolean
      */
     protected static $m_annotationsRegistered=false;
-
     /**
-     * @var Components\Test_Runner
+     * @var \Components\Test_Runner
      */
     private static $m_instance;
-
     /**
-     * @var array|Test_Listener
+     * @var \Components\Test_Listener[]
      */
     protected $m_listeners=array();
     /**
-     * @var array|Components\Test_Result_Handler
+     * @var \Components\Test_Result_Handler[]
      */
     protected $m_resultHandlers=array();
     /**
-     * @var array|string
+     * @var string[]
      */
     protected $m_suites=array();
     /**
-     * @var array|string
+     * @var string[]
      */
     protected $m_suitesAdded=array();
     /**
-     * @var array|string
+     * @var string[]
      */
     protected $m_testPaths=array();
     /**
-     * @var Components\Binding_Module
+     * @var \Components\Binding_Module
      */
     protected $m_bindingModule;
     /**
-     * @var Components\Injector
+     * @var \Components\Injector
      */
     protected $m_injector;
     /**
@@ -430,7 +430,7 @@ namespace Components;
      */
     protected $m_buildPath;
     /**
-     * @var Components\Test_Result
+     * @var \Components\Test_Result
      */
     protected $m_result;
     /**
@@ -452,7 +452,7 @@ namespace Components;
 
     protected function discoverTestPaths($path_)
     {
-      if(is_file($path_.'/.manifest'))
+      if(is_file("$path_/.manifest"))
       {
         try
         {
@@ -474,8 +474,8 @@ namespace Components;
 
       foreach($iterator as $entry)
       {
-        if($entry->isDir())
-          $this->discoverTestPaths($entry->getPathname());
+        if($entry->isDir() && 0!==strpos($entry->getBasename(), '.'))
+          $this->discoverTestPaths($entry->getRealpath());
       }
     }
 

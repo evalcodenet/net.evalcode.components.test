@@ -7,8 +7,7 @@ namespace Components;
   /**
    * Test_Listener
    *
-   * @package net.evalcode.components
-   * @subpackage test
+   * @package net.evalcode.components.test
    *
    * @author evalcode.net
    */

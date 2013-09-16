@@ -7,8 +7,7 @@ namespace Components;
   /**
    * Test_Result
    *
-   * @package net.evalcode.components
-   * @subpackage test
+   * @package net.evalcode.components.test
    *
    * @author evalcode.net
    */
@@ -31,20 +30,20 @@ namespace Components;
 
 
     // PROEPRTIES
+    public $results=array();
+
     /**
-     * @var Test_Result
+     * @var \Components\Test_Result
      */
     public $parent;
-    public $results=array();
 
     public $index;
     public $name;
     public $type;
     public $path;
     public $output;
-
     /**
-     * @var Exception_Flat
+     * @var \Components\Exception_Flat
      */
     public $exception;
 
