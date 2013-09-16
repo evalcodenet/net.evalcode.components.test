@@ -30,6 +30,9 @@ namespace Components;
       $instance->addOption('i', true, '/\.php$/', 'include only test suites matching given PCRE-compatible regex pattern', 'include');
 
       $instance->addEmptyOption();
+      $instance->addOption('a', true, null, 'enable static code analyzers [emma,..]', 'analyzers');
+
+      $instance->addEmptyOption();
       $instance->addOption('h', false, null, 'print command line instructions', 'help');
       $instance->addOption('v', false, null, 'print program version & license', 'version');
 
@@ -80,11 +83,14 @@ namespace Components;
         $test->setTestRootPath($this->getArgument('path'));
 
       if($this->hasArgument('config'))
-      {
-        if(false===is_file($configuration=$this->getArgument('config')))
-          throw new Exception_IllegalArgument('components/test/cli', 'Argument \'config\' must point to a valid file.');
-
         $test->configuration=$configuration;
+
+      if($this->hasArgument('analyzers'))
+      {
+        $analyzers=explode(',', strtolower($this->getArgument('analyzers')));
+
+        if(in_array('emma', $analyzers))
+          $test->addListener(new \Components\Test_Listener_Emma($test->getTestRootPath()));
       }
 
       $test->run();

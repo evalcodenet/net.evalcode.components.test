@@ -23,7 +23,7 @@ namespace Components;
 
 
     // CONSTRUCTION
-    public function __construct($rootPath_, $buildPath_)
+    public function __construct($rootPath_, $buildPath_=null)
     {
       $this->m_rootPath=$rootPath_;
       $this->m_buildPath=$buildPath_;
@@ -49,6 +49,9 @@ namespace Components;
 
         return;
       }
+
+      if(null===$this->m_buildPath)
+        $this->m_buildPath=$runner_->getBuildPath().'/emma.xml';
 
       Xdebug::startCodeCoverageAnalysis();
     }

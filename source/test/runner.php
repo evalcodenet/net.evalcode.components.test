@@ -92,10 +92,17 @@ namespace Components;
       if(null!==$this->configuration)
         include_once $this->configuration;
 
-      if(null===$this->m_buildPath)
-        throw new Exception_IllegalState('test/runner', 'Build path must be specified.');
-      if(null===$this->m_testRootPath)
-        throw new Exception_IllegalState('test/runner', 'Test root path must be specified.');
+      if(null!==$this->m_buildPath)
+        $this->m_buildPath=realpath($this->m_buildPath);
+
+      if(!Io::directoryCreate($this->m_buildPath))
+        throw new Exception_IllegalState('test/runner', 'Missing/invalid build path parameter.');
+
+      if(null!==$this->m_testRootPath)
+        $this->m_testRootPath=realpath($this->m_testRootPath);
+
+      if(!Io::directoryCreate($this->m_testRootPath))
+        throw new Exception_IllegalState('test/runner', 'Missing/invalid test root path.');
 
       if(null===$this->output)
         $this->output=new Test_Output_Null();
