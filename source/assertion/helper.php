@@ -30,7 +30,7 @@ namespace Components;
         $file=substr($trace[1]['file'], strrpos($trace[1]['file'], '/')+1);
       }
 
-      $args=array();
+      $args=[];
       foreach($args_ as $arg)
         $args[]=self::mixedToString($arg);
 

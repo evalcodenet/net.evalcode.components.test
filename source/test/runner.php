@@ -183,7 +183,7 @@ namespace Components;
         if(false===$this->filterFile($entry->getPathname()))
           continue;
 
-        $matches=array();
+        $matches=[];
         preg_match_all('/\n\s*(?:(?:abstract|final)+\s+)*(?:class|interface|trait)\s*(\w+)\s/',
           file_get_contents($entry->getPathname()), $matches
         );
@@ -400,23 +400,23 @@ namespace Components;
     /**
      * @var \Components\Test_Listener[]
      */
-    protected $m_listeners=array();
+    protected $m_listeners=[];
     /**
      * @var \Components\Test_Result_Handler[]
      */
-    protected $m_resultHandlers=array();
+    protected $m_resultHandlers=[];
     /**
      * @var string[]
      */
-    protected $m_suites=array();
+    protected $m_suites=[];
     /**
      * @var string[]
      */
-    protected $m_suitesAdded=array();
+    protected $m_suitesAdded=[];
     /**
      * @var string[]
      */
-    protected $m_testPaths=array();
+    protected $m_testPaths=[];
     /**
      * @var \Components\Binding_Module
      */

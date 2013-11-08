@@ -18,7 +18,7 @@ namespace Components;
      *
      * @return \Components\Test_Profiler
      */
-    public static function profileCallForked(array $callable_, array $args_=array())
+    public static function profileCallForked(array $callable_, array $args_=[])
     {
       if(false===static::isForkedProfilingSupported() || false===Memory_Shared_Shm::isSupported())
       {

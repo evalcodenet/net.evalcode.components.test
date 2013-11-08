@@ -196,7 +196,7 @@ namespace Components;
       $element->setAttribute(self::XML_ATTRIBUTE_NAME_TYPE, 'Assertion_Error');
       $element->setAttribute(self::XML_ATTRIBUTE_NAME_MESSAGE, 'Assertion Failed');
 
-      $output=array();
+      $output=[];
       foreach($resultTest_->collect(Test_Result::TYPE_ASSERTION, Test_Result::STATE_FAILED) as $result)
         $output[]=$result->output;
 

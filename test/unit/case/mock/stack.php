@@ -132,7 +132,7 @@ namespace Components;
     /**
      * @var \Components\Test_Unit_Case_Mock_Stack|array
      */
-    private $m_array=array();
+    private $m_array=[];
     /**
      * @var integer
      */

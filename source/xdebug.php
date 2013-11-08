@@ -66,7 +66,7 @@ namespace Components;
 
     public static function clearCodeCoverageReport()
     {
-      self::$m_codeCoverageReport=array();
+      self::$m_codeCoverageReport=[];
     }
 
     public static function isSupported()
@@ -80,7 +80,7 @@ namespace Components;
     private static $m_phpIni=array(
       'xdebug.coverage_enable'=>'true'
     );
-    private static $m_codeCoverageReport=array();
+    private static $m_codeCoverageReport=[];
     private static $m_isCodeCoverageAnalysisRunning=false;
     //-----
 

@@ -21,7 +21,7 @@ namespace Components;
      */
     public function testAssertArray()
     {
-      assertArray(array());
+      assertArray([]);
     }
 
     /**
@@ -84,7 +84,7 @@ namespace Components;
      */
     public function testAssertArraySizeFailed()
     {
-      assertArraySize(array(), 3);
+      assertArraySize([], 3);
     }
 
     /**
@@ -369,7 +369,7 @@ namespace Components;
     {
       assertEmpty(0);
       assertEmpty('');
-      assertEmpty(array());
+      assertEmpty([]);
     }
 
     /**
@@ -399,7 +399,7 @@ namespace Components;
      */
     public function testAssertNotEmptyFailed()
     {
-      assertNotEmpty(array());
+      assertNotEmpty([]);
     }
 
     /**

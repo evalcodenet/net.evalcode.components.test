@@ -30,7 +30,7 @@ namespace Components;
 
 
     // PROEPRTIES
-    public $results=array();
+    public $results=[];
 
     /**
      * @var \Components\Test_Result
@@ -49,7 +49,7 @@ namespace Components;
 
     // TODO Remove/merge with profilerProcessingTime or remove profiler* property prefixes
     public $processingTime;
-    public $profilerSplitTimeTable=array();
+    public $profilerSplitTimeTable=[];
     public $profilerMemoryConsumption;
     public $profilerPosixTimes;
     public $profilerProcessingTime;
@@ -117,7 +117,7 @@ namespace Components;
     {
       $parent=$this;
 
-      $path=array();
+      $path=[];
       while($parent->name)
       {
         array_unshift($path, $parent->name);
@@ -131,7 +131,7 @@ namespace Components;
     {
       $parent=$this;
 
-      $index=array();
+      $index=[];
       while($parent->index)
       {
         array_unshift($index, $parent->index);
@@ -141,7 +141,7 @@ namespace Components;
       return $index;
     }
 
-    public function collect($type_=self::TYPE_TEST, $state_=self::STATE_ALL, $recursive_=true, array &$results_=array())
+    public function collect($type_=self::TYPE_TEST, $state_=self::STATE_ALL, $recursive_=true, array &$results_=[])
     {
       if(0<($this->type&$type_) && (self::STATE_ALL===$state_?true:$this->hasState($state_)))
         array_push($results_, $this);

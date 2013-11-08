@@ -18,7 +18,7 @@ namespace Components;
     /**
      * @return \Components\Mock
      */
-    public static function mock($type_, array $args_=array())
+    public static function mock($type_, array $args_=[])
     {
       if(false===@class_exists($type_) && false===@interface_exists($type_))
       {
@@ -52,7 +52,7 @@ namespace Components;
      * @return \Components\Mock
      */
     // FIXME (CSH) Support namespaces correctly.
-    protected static function mockImpl($type_, array $args_=array())
+    protected static function mockImpl($type_, array $args_=[])
     {
       $type=new \ReflectionClass($type_);
 
@@ -108,14 +108,14 @@ namespace Components;
       $type=@file_get_contents($type_->getFileName());
       $typeMTime=@filemtime($type_->getFileName());
 
-      $method=array();
-      $methods=array();
+      $method=[];
+      $methods=[];
       foreach(token_get_all($type) as $token)
       {
         if(count($method) && ('{'==$token || ';'==$token))
         {
           $methods[]=$method;
-          $method=array();
+          $method=[];
         }
         else if(count($method))
         {
@@ -126,7 +126,7 @@ namespace Components;
           $method[]=$token;
       }
 
-      $signatures=array();
+      $signatures=[];
       foreach($methods as $tokens)
       {
         $tokens=array_slice($tokens, 2);
@@ -168,7 +168,7 @@ namespace Components;
         if($method->isStatic() || $method->isFinal())
           continue;
 
-        $parameters=array();
+        $parameters=[];
         foreach($method->getParameters() as $parameter)
           $parameters[]='$'.$parameter->name;
 

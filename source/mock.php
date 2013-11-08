@@ -82,7 +82,7 @@ namespace Components;
     /**
      * @var \Components\Mock_Stub[]
      */
-    private $m_stubs=array();
+    private $m_stubs=[];
     //-----
 
 

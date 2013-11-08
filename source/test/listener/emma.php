@@ -124,11 +124,11 @@ namespace Components;
 
 
     // IMPLEMENTATION
-    protected $m_classPaths=array();
-    protected $m_methods=array();
-    protected $m_classes=array();
-    protected $m_packages=array();
-    protected $m_files=array();
+    protected $m_classPaths=[];
+    protected $m_methods=[];
+    protected $m_classes=[];
+    protected $m_packages=[];
+    protected $m_files=[];
     protected $m_lines=0;
     protected $m_buildPath;
     protected $m_rootPath;
@@ -146,11 +146,11 @@ namespace Components;
     {
       $testPaths=$runner_->getTestPaths();
 
-      $classpaths=array();
+      $classpaths=[];
       foreach(Runtime_Classloader::getClassloaders() as $classloader)
         $classpaths=array_merge($classpaths, $classloader->getClasspaths());
 
-      $emmaReport=array();
+      $emmaReport=[];
       // TODO (CSH) Alter
       foreach($classpaths as $clazz=>$path)
       {
@@ -375,8 +375,8 @@ namespace Components;
       if(1<count($chunks=explode('/', $clazz_)))
         $clazz_=trim(array_pop($chunks));
 
-      $class=array();
-      $methods=array();
+      $class=[];
+      $methods=[];
 
       $depth=0;
       for($i=0; $i<$countTokens; $i++)

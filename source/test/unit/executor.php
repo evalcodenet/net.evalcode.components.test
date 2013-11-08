@@ -77,7 +77,7 @@ namespace Components;
     /**
      * @var \Components\Test_Unit_Internal_DynamicProxy[]
      */
-    protected $m_cases=array();
+    protected $m_cases=[];
     /**
      * @var \Components\Test_Unit_Internal_DynamicProxy
      */

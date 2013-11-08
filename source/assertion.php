@@ -1014,7 +1014,7 @@ namespace Components;
       'Expected value that matches given pattern', __FUNCTION__, func_get_args()
     );
 
-    $matches=array();
+    $matches=[];
     $result=preg_match($pattern_, $value_, $matches);
     $result=0<(int)$result;
 
@@ -1036,7 +1036,7 @@ namespace Components;
       'Expected value that not matches given pattern', __FUNCTION__, func_get_args()
     );
 
-    $matches=array();
+    $matches=[];
     $result=preg_match($pattern_, $value_, $matches);
     $result=1>(int)$result;
 

@@ -84,9 +84,9 @@ namespace Components;
     /**
      * @var \Components\Assertion_Context[]
      */
-    private static $m_instances=array();
+    private static $m_instances=[];
 
-    private $m_assertions=array();
+    private $m_assertions=[];
     //--------------------------------------------------------------------------
   }
 ?>
