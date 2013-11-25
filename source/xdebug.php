@@ -78,6 +78,7 @@ namespace Components;
 
     // IMPLEMENTATION
     private static $m_phpIni=array(
+      'xdebug.extended_info'=>'true',
       'xdebug.coverage_enable'=>'true'
     );
     private static $m_codeCoverageReport=[];

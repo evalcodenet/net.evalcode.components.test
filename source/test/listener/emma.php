@@ -17,11 +17,6 @@ namespace Components;
    */
   class Test_Listener_Emma implements Test_Listener
   {
-    // PROPERTIES
-    public $excludePattern;
-    //--------------------------------------------------------------------------
-
-
     // CONSTRUCTION
     public function __construct($rootPath_, $buildPath_=null)
     {
@@ -151,13 +146,10 @@ namespace Components;
         $classpaths=array_merge($classpaths, $classloader->getClasspaths());
 
       $emmaReport=[];
-      // TODO (CSH) Alter
+
       foreach($classpaths as $clazz=>$path)
       {
         if(isset($testPaths[$path]))
-          continue;
-
-        if($this->filterPathForPattern($path, $this->excludePattern))
           continue;
 
         $this->reportForClass($clazz, $path, $xDebugReport_, $emmaReport);
@@ -510,14 +502,6 @@ namespace Components;
         return 0;
 
       return round((100/$x_)*$y_, 2);
-    }
-
-    protected function filterPathForPattern($path_, $pattern_=null)
-    {
-      if(null===$pattern_)
-        return false;
-
-      return 1==preg_match($pattern_, $path_);
     }
     //--------------------------------------------------------------------------
   }

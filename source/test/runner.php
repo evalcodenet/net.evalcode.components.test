@@ -15,14 +15,6 @@ namespace Components;
   {
     // PROPERTIES
     /**
-     * @var string PCRE/Perl-compatible regex pattern for test path inclusion.
-     */
-    public $includePattern;
-    /**
-     * @var string PCRE/Perl-compatible regex pattern for test path exclusion.
-     */
-    public $excludePattern;
-    /**
      * @var string
      */
     public $configuration;
@@ -60,6 +52,7 @@ namespace Components;
         $type_=get_called_class();
 
       $type=new \ReflectionClass($type_);
+
       if(false===$type->isSubclassOf(__CLASS__))
       {
         throw new Exception_IllegalArgument('test/runner', sprintf(
@@ -92,11 +85,13 @@ namespace Components;
       if(null!==$this->configuration)
         include_once $this->configuration;
 
-      if(null!==$this->m_buildPath)
+      if(null!==$this->m_buildPath && @is_dir($this->m_buildPath))
         $this->m_buildPath=realpath($this->m_buildPath);
 
       if(!Io::directoryCreate($this->m_buildPath))
         throw new Exception_IllegalState('test/runner', 'Missing/invalid build path parameter.');
+
+      $this->m_buildPath=realpath($this->m_buildPath);
 
       if(null!==$this->m_testRootPath)
         $this->m_testRootPath=realpath($this->m_testRootPath);
@@ -180,9 +175,6 @@ namespace Components;
 
       foreach($iterator as $entry)
       {
-        if(false===$this->filterFile($entry->getPathname()))
-          continue;
-
         $matches=[];
         preg_match_all('/\n\s*(?:(?:abstract|final)+\s+)*(?:class|interface|trait)\s*(\w+)\s/',
           file_get_contents($entry->getPathname()), $matches
@@ -494,28 +486,6 @@ namespace Components;
       }
     }
 
-    protected function filterFile($filePath_)
-    {
-      if(null!==$this->excludePattern)
-      {
-        if($this->filterFileForPattern($filePath_, $this->excludePattern))
-          return false;
-      }
-
-      if(null!==$this->includePattern)
-      {
-        if(false===$this->filterFileForPattern($filePath_, $this->includePattern))
-          return false;
-      }
-
-      return $this->validSourceFile($filePath_);
-    }
-
-    protected function filterFileForPattern($filePath_, $pattern_)
-    {
-      return 1===(int)preg_match($pattern_, $filePath_);
-    }
-
     protected function validPath($path_)
     {
       return Io_Path::resolve($path_)->exists();
@@ -534,12 +504,7 @@ namespace Components;
 
     public function __autoload($type_)
     {
-      if(false===isset($this->m_testPaths[$type_]))
-        return false;
-
-      require_once $this->m_testPaths[$type_];
-
-      return true;
+      return @include_once $this->m_testPaths[$type_];
     }
 
 

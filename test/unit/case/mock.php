@@ -17,7 +17,7 @@ namespace Components;
     // TESTS
     /**
      * @test
-     * @profile(fork)
+     * @profile
      * @ignore(ignoreUntilFixed)
      */
     public function mockFactory()
@@ -76,7 +76,7 @@ namespace Components;
 
     /**
      * @test
-     * @profile(fork)
+     * @profile
      * @ignore(ignoreUntilFixed)
      */
     public function mockMethods()

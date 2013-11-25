@@ -26,10 +26,6 @@ namespace Components;
       $instance->addOption('c', true, null, 'configuration path', 'config');
 
       $instance->addEmptyOption();
-      $instance->addOption('e', true, null, 'exclude test suites matching given PCRE-compatible regex pattern', 'exclude');
-      $instance->addOption('i', true, '/\.php$/', 'include only test suites matching given PCRE-compatible regex pattern', 'include');
-
-      $instance->addEmptyOption();
       $instance->addOption('a', true, null, 'enable static code analyzers [emma,..]', 'analyzers');
 
       $instance->addEmptyOption();
@@ -75,11 +71,6 @@ namespace Components;
 
       if($this->hasArgument('config'))
         $test->configuration=$this->getArgument('config');
-      if($this->hasArgument('exclude'))
-        $test->excludePattern=$this->getArgument('exclude');
-      if($this->hasArgument('include'))
-        $test->includePattern=$this->getArgument('include');
-
       if($this->hasArgument('path'))
         $test->setTestRootPath($this->getArgument('path'));
       if($this->hasArgument('build'))
@@ -94,10 +85,9 @@ namespace Components;
       }
 
       $test->run();
+      $this->close();
 
       Cache::enable();
-
-      $this->close();
     }
     //--------------------------------------------------------------------------
   }

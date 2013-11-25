@@ -33,7 +33,7 @@ namespace Components;
     {
       $this->appendLine('  Unit Test Executor 0.1');
       $this->append('  net.evalcode.components');
-      $this->appendLine(str_repeat(' ', $this->width-54).'Copyright (C) evalcode.net');
+      $this->appendLine(str_repeat(' ', $this->width-54).'Copyright (C) '.date('Y').' evalcode.net');
       $this->appendLine();
     }
 

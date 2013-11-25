@@ -26,6 +26,7 @@ namespace Components;
       $this->m_path=str_replace("$rootPath/", '', $testClassPath);
 
       $annotations=Annotations::get($class_);
+
       foreach($this->m_class->getMethods(\ReflectionMethod::IS_PUBLIC) as $method)
       {
         if($ignoreAnnotation=$annotations->getMethodAnnotation($method->name, Annotation_Ignore::NAME))
@@ -286,6 +287,7 @@ namespace Components;
         return $this->m_methods[$this->m_mappedMethods[$name_]];
       else if(isset($this->m_methods[$name_]))
         return $this->m_methods[$name_];
+
       return null;
     }
 
