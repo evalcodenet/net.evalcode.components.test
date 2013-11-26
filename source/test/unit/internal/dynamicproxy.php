@@ -44,7 +44,7 @@ namespace Components;
           }
           else if(null!==$ignoreAnnotation->value)
           {
-            if(false!==($reason=call_user_func(array($this->m_class->name, $ignoreAnnotation->value))))
+            if(false!==($reason=call_user_func([$this->m_class->name, $ignoreAnnotation->value])))
             {
               if(is_string($reason))
                 $this->m_skippedTestsReasons[$method->name]=$reason;
@@ -318,7 +318,7 @@ namespace Components;
       if(true===array_key_exists($method->name, $this->m_profileMethods))
       {
         $this->m_profileMethods[$method->name]=Test_Profiler::$profileMethod(
-          array($this->m_instance, $this->m_methods[$method->name]->name)
+          [$this->m_instance, $this->m_methods[$method->name]->name]
         );
 
         $this->m_exceptions[$method->name]=
@@ -369,14 +369,14 @@ namespace Components;
 
 
     // IMPLEMENTATION
-    private static $m_staticAnnotations=array(
+    private static $m_staticAnnotations=[
       Annotation_AfterClass::NAME,
       Annotation_AfterMethod::NAME,
       Annotation_AfterSuite::NAME,
       Annotation_BeforeClass::NAME,
       Annotation_BeforeMethod::NAME,
       Annotation_BeforeSuite::NAME
-    );
+    ];
 
     private $m_output=[];
     private $m_exceptions=[];
