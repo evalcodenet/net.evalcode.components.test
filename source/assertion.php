@@ -689,6 +689,26 @@ namespace Components;
 
   /**
    * @param mixed $value_
+   * @param string $type_
+   *
+   * @return boolean|false If given parameter is not of defined type.
+   */
+  function assertTypeOf($value_, $type_)
+  {
+    $message=Assertion_Helper::getMessage(
+      'Expected value of type', __FUNCTION__, func_get_args()
+    );
+
+    $result=is_a($value_, $type_);
+
+    Assertion_Context::current()->add(__FUNCTION__, $result, $message);
+
+    return $result;
+  }
+
+
+  /**
+   * @param mixed $value_
    *
    * @return boolean|false If given parameter is an object
    */
