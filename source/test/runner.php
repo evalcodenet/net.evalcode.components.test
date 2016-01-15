@@ -209,7 +209,7 @@ namespace Components;
      */
     public function setBuildPath($path_)
     {
-      $this->m_buildPath=$path_;
+      $this->m_buildPath=rtrim($path_, '/');
     }
 
     /**
@@ -227,6 +227,8 @@ namespace Components;
      */
     public function setTestRootPath($path_)
     {
+      $path_=rtrim($path_, '/');
+
       if(false===$this->validPath($path_))
         throw new Exception_IllegalArgument('test/runner', 'Invalid test root path.');
 
@@ -367,7 +369,7 @@ namespace Components;
      */
     public function hashCode()
     {
-      return object_hash($this);
+      return \math\hasho($this);
     }
 
     /**
@@ -475,7 +477,7 @@ namespace Components;
     {
       $this->discoverTestPaths($path_);
 
-      spl_autoload_register(array($this, '__autoload'));
+      spl_autoload_register([$this, '__autoload']);
 
       foreach($this->m_testPaths as $clazz=>$path)
       {

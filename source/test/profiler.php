@@ -22,13 +22,13 @@ namespace Components;
     {
       if(false===static::isForkedProfilingSupported() || false===Memory_Shared_Shm::isSupported())
       {
-        throw new Runtime_Exception('test/profiler',
+        throw new Exception_NotSupported('test/profiler',
           'Forked profiling is not supported on this platform\'s configuration.'
         );
       }
 
       if(false===is_callable($callable_))
-        throw new Runtime_Exception('test/profiler', 'Valid callback expected.');
+        throw new Exception_IllegalArgument('test/profiler', 'Valid callback expected.');
 
       $shm=Memory_Shared_Shm_Temporary::create();
       $shm->attach();
@@ -41,7 +41,7 @@ namespace Components;
 
       if(-1==$pid)
       {
-        throw new Runtime_Exception('test/profiler',
+        throw new Exception_IllegalState('test/profiler',
           'Unable to fork child process. Forked profiling failed.'
         );
       }

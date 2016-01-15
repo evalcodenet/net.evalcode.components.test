@@ -13,7 +13,7 @@ namespace Components;
    *
    * @author evalcode.net
    */
-  class Assertion_Error extends Test_ErrorException
+  class Assertion_Error extends Test_Error
   {
     // CONSTRUCTION
     public function __construct($namespace_='test/assertion/error',

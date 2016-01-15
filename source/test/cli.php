@@ -21,6 +21,9 @@ namespace Components;
     {
       $instance=new static();
 
+      $year=date('Y');
+      $version=(string)Runtime::version();
+
       $instance->addOption('p', true, null, 'test root path', 'path');
       $instance->addOption('b', true, null, 'build path', 'build');
       $instance->addOption('c', true, null, 'configuration path', 'config');
@@ -33,8 +36,8 @@ namespace Components;
       $instance->addOption('v', false, null, 'print program version & license', 'version');
 
       $instance->setInfo(sprintf('%1$s%3$s%2$s%3$s',
-        'Test Executor 0.1, net.evalcode.components',
-        'Copyright (C) evalcode.net',
+        "Test Executor $version, net.evalcode.components",
+        "Copyright (C) $year evalcode.net",
         Io::LINE_SEPARATOR_DEFAULT
       ));
 
@@ -51,9 +54,11 @@ namespace Components;
 
       $this->open();
 
-      if($this->hasArgument('help') || $this->hasArgument('version'))
+      $mandatoryDefined=$this->hasArgument('path') && $this->hasArgument('build');
+
+      if($this->hasArgument('help') || $this->hasArgument('version') || !$mandatoryDefined)
       {
-        if($this->hasArgument('help'))
+        if($this->hasArgument('help') || !$mandatoryDefined)
           $this->appendOptions();
         else
           $this->appendInfo();

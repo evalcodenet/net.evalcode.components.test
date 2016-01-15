@@ -28,7 +28,7 @@ namespace Components;
     // OVERRIDES
     public function hashCode()
     {
-      return object_hash($this);
+      return \math\hasho($this);
     }
 
     public function __toString()
