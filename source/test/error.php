@@ -5,13 +5,13 @@ namespace Components;
 
 
   /**
-   * Test_ErrorException
+   * Test_Error
    *
    * @package net.evalcode.components.test
    *
    * @author evalcode.net
    */
-  class Test_ErrorException extends Runtime_ErrorException
+  class Test_Error extends Runtime_Error_Abstract
   {
     // CONSTRUCTION
     public function __construct($namespace_='test/error',

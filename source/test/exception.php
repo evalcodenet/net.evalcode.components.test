@@ -11,7 +11,7 @@ namespace Components;
    *
    * @author evalcode.net
    */
-  class Test_Exception extends Runtime_Exception
+  class Test_Exception extends Runtime_Exception_Abstract
   {
     // CONSTRUCTION
     public function __construct($namespace_='test/exception',
